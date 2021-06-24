@@ -282,3 +282,13 @@ if (favourite !== 23) console.log("Why not 23?");
 
 //////////////////////////////////////////////////
 // Lecture 23 Boolean Logic:
+/*
+const age = 16;
+const a = age >= 20;
+const b = age < 30;
+console.log(a, b);
+console.log(!a);
+*/
+
+// Lecture 24 Logical Operators:
+
