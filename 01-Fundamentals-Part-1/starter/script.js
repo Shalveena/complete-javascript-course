@@ -290,7 +290,9 @@ console.log(a, b);
 console.log(!a);
 */
 
+////////////////////////////////////////////////
 // Lecture 24 Logical Operators:
+/*
 const hasDriversLicence = true;
 const hasGoodVision = true;
 console.log(hasDriversLicence && hasGoodVision);
@@ -315,3 +317,51 @@ if (hasDriversLicence && hasGoodVision && !isTired) {
 } else {
   console.log("Sarah shouldn't drive!");
 }
+*/
+
+//////////////////////////////////////////////////
+// Lecture 26 The switch Statement
+/*
+//Note: switch statements are made for equality comparisons, not >, < etc.
+
+const day = "Hello";
+
+switch (
+  day // Note: (day) is what we want the case to equal to
+) {
+  case "Monday": // check whether day === "Monday"
+    console.log("Start the week in a good mood");
+    break; // without the break, the code will keep executing through the rest of the switch statement.
+  case "Tuesday":
+    console.log("Still have a lot of energy");
+    break;
+  case "Wednesday":
+  case "Thursday":
+    console.log("Argh. Mid-week. Low energy");
+    break;
+  case "Friday":
+    console.log("Yay, so close to the weekend. Final push of energy");
+    break;
+  case "Saturday":
+  case "Sunday":
+    console.log("Enjoy the weekend! 🥰");
+    break;
+  default:
+    console.log("Invalid day!");
+}
+
+// here is how you would write the above switch statement as an if/else statement:
+if (day === "Monday") {
+  console.log("Start the week in a good mood");
+} else if (day === "Tuesday") {
+  console.log("Still have a lot of energy");
+} else if (day === "Wednesday" || day === "Thursday") {
+  console.log("Argh. Mid-week. Low energy");
+} else if (day === "Friday") {
+  console.log("Yay, so close to the weekend. Final push of energy");
+} else if (day === "Saturday" || day === "Sunday") {
+  console.log("Enjoy the weekend! 🥰");
+} else {
+  console.log("Invalid day!");
+}
+*/
