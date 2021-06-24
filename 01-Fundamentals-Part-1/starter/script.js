@@ -291,4 +291,27 @@ console.log(!a);
 */
 
 // Lecture 24 Logical Operators:
+const hasDriversLicence = true;
+const hasGoodVision = true;
+console.log(hasDriversLicence && hasGoodVision);
+console.log(hasDriversLicence || hasGoodVision);
+console.log(!hasDriversLicence);
 
+//Determining whether Sarah can drive:
+//she can drive if she has good vision AND a driver's licence.
+
+// if (hasDriversLicence && hasGoodVision) {
+//   console.log("Sarah can drive!");
+// } else {
+//   console.log("Sarah shouldn't drive!");
+// }
+
+//adding new variable
+const isTired = false;
+
+//she can drive if she has a driver's licence AND she has good vision AND she is not tired.
+if (hasDriversLicence && hasGoodVision && !isTired) {
+  console.log("Sarah can drive!");
+} else {
+  console.log("Sarah shouldn't drive!");
+}
