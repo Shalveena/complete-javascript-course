@@ -170,3 +170,115 @@ const shalveenaNew = `I'm ${firstName}, a ${
 } year old ${job}!`;
 console.log(shalveenaNew);
 */
+
+//////////////////////////////////////////////////
+// Lecture 18 Taking decisions: if / else Statements
+/*
+const age = 15;
+
+if (age >= 18) {
+   console.log(
+    "Sarah can start driving license 🚗"
+  );
+} else {
+  const yearsLeft = 18 - age;
+  console.log(`Sarah is too young. Wait another ${yearsLeft} years 😊`);
+} // if / else statement is called a control structure becaues it allows us to have more control about the way our code is executed (rather than just execution in a linear way).
+
+const birthYear = 1987;
+let century; // need to declare the variable globally, otherwise we will not be able to console.log it outside the code-block of the if/else statement.
+
+if (birthYear <= 2000) {
+  century = 20;
+} else {
+  century = 21;
+}
+console.log(century);
+*/
+
+//////////////////////////////////////////////////
+// Lecture 20 Type Conversion and Coercion
+/*
+//Type conversion (is when we explicitly conver the type):
+const inputYear = "1991";
+// console.log(inputYear + 18); // 199118
+console.log(Number(inputYear));
+console.log(inputYear + 18); // still 199118 because original value stored in inputYear is not converted!
+console.log(Number(inputYear) + 18); //2009
+
+const firstName = Number("Shalveena");
+console.log(typeof firstName); // typeof is number, and value is NaN
+
+// converting to string:
+console.log(String(23)); // 23 (type: string);
+// Note: can only convert to string, number or boolean.
+
+//Type coercion:
+console.log("I am" + 23 + " years old."); // produces a string "I am 23 years old" by changing 23 to a string automatically. Addition operator converts numbers to string.
+console.log("23" - "10" - 3); // 3. Subtraction converts strings to numbers.
+console.log("23" / "2"); // 11.5 because division and multiplication operators also convert strings to numbers.
+console.log("23" > "18"); // true. Again, logical operators also convert strings to numbers because that is the only way it would work.
+*/
+
+//////////////////////////////////////////////////
+// Lecture 21 Truthy and Falsy Values
+/*
+// 5 falsy values (will be converted to false when converted to a boolean): 0, "", undefined, null, NaN
+
+console.log(Boolean(0)); // to convert 0 to a boolean. False
+console.log(Boolean(undefined)); // false
+console.log(Boolean("Shalveena")); //true
+console.log(Boolean({})); //true
+console.log(Boolean(NaN)); //false
+
+//type coercion to boolean in the condition part of if/else statements:
+const money = 0;
+if (money) {
+  console.log("Don't spend it all ;)");
+} else {
+  console.log("You have no money!");
+}
+// in the above, JS tries to convert the value stored in money into a boolean.
+
+// another use case is to test whether a variable has been defined
+let height;
+if (height) {
+  console.log("Yay! Height is defined.");
+} else {
+  console.log("Height is UNDEFINED");
+} // but note that if height = 0 then we will get the else block even though height is defined!
+*/
+
+//////////////////////////////////////////////////
+// Lecture 22 Equality Operators: == vs. ===
+/*
+// == does type coercion. === does not do type coercion.
+const age = "18";
+if (age === 18) console.log("You just became an adult! (strict)"); //whenever our if block only has one line, we don't need the curly brackets.
+if (age == 18) console.log("You just became an adult! (loose)");
+
+//getting value from webpage:
+// const favourite = prompt("What is your favourite number?"); //will save into the variable whatever number you put into the promt pop-up
+// console.log(favourite);
+// console.log(typeof favourite); // string
+
+const favourite = Number(prompt("What is your favourite number?"));
+console.log(favourite);
+console.log(typeof favourite); // number
+
+if (favourite === 23) {
+  console.log("Cool, 23 is an amazing number!");
+} else if (favourite === 7) {
+  console.log("7 is also a cool number!");
+} else if (favourite === 9) {
+  console.log("9 is also a cool number!");
+} else {
+  console.log("Number is not 23 or 7 or 9");
+}
+
+//operator for different (note !== is the strict version, vs != loose version):
+if (favourite !== 23) console.log("Why not 23?");
+*/
+
+//////////////////////////////////////////////////
+// Lecture 23 Boolean Logic:
