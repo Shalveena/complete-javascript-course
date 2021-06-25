@@ -365,3 +365,46 @@ if (day === "Monday") {
   console.log("Invalid day!");
 }
 */
+
+//////////////////////////////////////////////////
+// Lecture 27 Statements and Expressions
+/*
+//expression is a piece of code that produces a value:
+3 + 4;
+1991; //this is an expression too, as it will produce a value in JS
+true && false && !false; //this is an expression too because at the end it will produce a value.
+
+//statement is a bigger piece of code that is executed and which does not produce a value by itself.
+if (23 > 10) {
+  const str = "23 is bigger";
+} // this does not really produce a value, it simply performs some actions (e.g. creating the variable str). The string itself (str) is a value.
+
+//whenever something ends with a ;, that is a statement.
+
+//Js expects expressions and statements in different places. For example, in template literal, we can insert expressions, not statements.
+*/
+
+//////////////////////////////////////////////////
+// Lecture 28 The Conditional (Ternary) Operator
+/*
+const age = 23;
+// age >= 18 //this is the condition we are checking
+//   ? console.log("I can drink alcohol 🍺") // this is the if block. It can only be one line of code
+//   : console.log("I like to drink water 💧"); // mandatory else block
+
+//note that a conditional operator is an OPERATOR, so it produces a value! An operator is an expression and it produces a value, which we can store in a variable - so we can use condiional operators to conditionally declare variables!
+const drink = age >= 18 ? "alcohol 🍺" : "water 💧";
+console.log(drink);
+
+// Otherwise, we would need to use if/else block and declare the variable globally in order to use it outside the if/else block.
+let drink2;
+if (age >= 18) {
+  drink2 = "alcohol 🍺";
+} else {
+  drink2 = "water 💧";
+}
+console.log(drink2);
+
+//since a ternary operator is an expression, we can use it in template literals too (unlike if/else statements)
+console.log(`I like to drink ${age >= 18 ? "alcohol 🍺" : "water 💧"}`);
+*/

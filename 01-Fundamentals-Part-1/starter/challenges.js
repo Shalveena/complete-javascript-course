@@ -161,3 +161,17 @@ if (avgScoreDolphins > avgScoreKoalas && avgScoreDolphins >= 100) {
   console.log("There is no winner :(");
 }
 */
+
+// Coding Challenge #4
+/*
+//1 calculate the tip depending on the bill value
+const bill = 430;
+const tip = bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+
+//2 print a string to the console containing the bill value, the tip, and the final value (bill + tip).
+console.log(
+  `The bill was ${bill}, the tip was ${tip}, and the total value is ${
+    bill + tip
+  }`
+);
+*/
