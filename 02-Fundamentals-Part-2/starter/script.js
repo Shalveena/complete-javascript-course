@@ -190,3 +190,69 @@ const yearsUntilRetire = function (birthYear, firstName) {
 console.log(yearsUntilRetire(1987, "Shalveena"));
 console.log(yearsUntilRetire(1951, "Manni"));
 */
+
+//////////////////////////////////////////////////
+// Lecture 39 Intro to Arrays
+/*
+
+//Arrays are a data structure. It's like a big container into which we can throw variables and later reference them
+
+//e.g. instead of doing this:
+const friend1 = "Mark";
+const friend2 = "Tom";
+const friend3 = "Paul";
+//we can do this:
+const friends = ["Mark", "Tom", "Paul"];
+console.log(friends);
+//another way to make an array:
+const y = new Array(2000, 2001, 2002, 2003, 2004); //using the 'new' keyword and 'Array' function.
+
+//Arrays are zero based (starts at 0)
+//If we want to get data out of the array:
+console.log(friends[0]); // Mark
+console.log(friends[2]); // Paul
+//Note: you can put any expression within the [ ]
+
+//To get the number of elements in the array:
+console.log(friends.length); //uses the .length property. Prints 3 (not zero based)
+//we can use the above to get the last element in the array:
+console.log(friends[friends.length - 1]); // Paul
+
+//Change element in array
+friends[2] = "Jay";
+console.log(friends);
+
+//Can mutate elements in array declared with const but cannot replace the whole array
+// friends = ["Peter", "Alice", "June"]; //Uncaught TypeError: Assignment to constant variable.
+
+//Can contain mix of diff kinds of expressions:
+const firstName = "Shalveena";
+const shalveena = [firstName, "Rohde", 2021 - 1987, "student", friends];
+console.log(shalveena);
+
+//cannot use whole arrays to do calculations:
+const years = [1984, 1987, 1989, 2000];
+const calcAge = function (birthYear) {
+  return 2021 - birthYear;
+};
+console.log(calcAge(years)); //NaN
+
+//instead do:
+const age1 = calcAge(years[0]);
+console.log(age1); // calcAge(1984) = 2021 - 1984 = 37
+const age2 = calcAge(years[2]);
+console.log(age2); // 32
+const age3 = calcAge(years[years.length - 1]);
+console.log(age3); // 21
+
+//it's good practice to store what you get from an array back into an array
+const ages = [
+  calcAge(years[0]),
+  calcAge(years[2]),
+  calcAge(years[years.length - 1]),
+];
+console.log(ages); // [37, 32, 21]
+*/
+
+//////////////////////////////////////////////////
+// Lecture 40 Basic Array Operations (Methods)
