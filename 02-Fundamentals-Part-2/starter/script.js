@@ -256,3 +256,52 @@ console.log(ages); // [37, 32, 21]
 
 //////////////////////////////////////////////////
 // Lecture 40 Basic Array Operations (Methods)
+
+//These methods are built in JS functions that can be performed on arrays.
+
+// Add Elements
+
+//Push method
+const friends = ["Mark", "Tom", "Paul"];
+friends.push("Jay"); // adds new element to end of array
+console.log(friends);
+//push method returns the length of the new array
+const newLength = friends.push("Hale"); // ["Mark", "Tom", "Paul", "Jay", "Hale"]
+console.log(newLength); // 5
+
+//Unshift method
+friends.unshift("Peter"); // adds new element to the start of the array
+//also returns the length of th new array
+console.log(friends); // ["Peter", "Mark", "Tom", "Paul", "Jay", "Hale"]
+
+// Remove Elements
+
+// Pop method
+friends.pop(); // removes last element
+console.log(friends); // ["Peter", "Mark", "Tom", "Paul", "Jay"]
+friends.pop();
+console.log(friends); // ["Peter", "Mark", "Tom", "Paul"]
+console.log(friends.pop()); // returns the element that was removed.
+
+// Shift method
+friends.shift(); //removes first element
+console.log(friends); // ["Mark", "Tom"]
+//also returns the element that was removed
+
+// IndexOf method
+// returns the position of the element within the array
+console.log(friends.indexOf("Tom"));
+// if you try to return index of an element that doesn't exist, it will return -1
+console.log(friends.indexOf("Max"));
+
+// Includes method
+// is ES6 method. Preferable. Returns true or false
+console.log(friends.includes("Tom")); //true
+console.log(friends.includes("Max")); //false
+// uses strict equality for the check
+friends.push(23);
+console.log(friends.includes("23")); //false
+console.log(friends.includes(23)); //true
+
+// can use the includes method to write conditionals:
+if (friends.includes("Tom")) console.log("You have a friend called Tom");
