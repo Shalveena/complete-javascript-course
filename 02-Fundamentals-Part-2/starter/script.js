@@ -256,6 +256,7 @@ console.log(ages); // [37, 32, 21]
 
 //////////////////////////////////////////////////
 // Lecture 40 Basic Array Operations (Methods)
+/*
 
 //These methods are built in JS functions that can be performed on arrays.
 
@@ -305,3 +306,4 @@ console.log(friends.includes(23)); //true
 
 // can use the includes method to write conditionals:
 if (friends.includes("Tom")) console.log("You have a friend called Tom");
+*/
