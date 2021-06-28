@@ -62,7 +62,71 @@ console.log(`${germanyPop}`);
 */
 
 // Lecture: Functions calling other functions
+//1. Create a function called 'describePopulation'. Use the function type you like the most. This function takes in two arguments: 'country' and 'population', and returns a string like this: 'China has 1441 million people, which is about 18.2% of the world.'
+//2. To calculate the percentage, 'describePopulation' call the 'percentageOfWorld1' you created earlier
+
+function percentageOfWorld(population) {
+  return ((population / 7900) * 100).toFixed(2);
+}
+
+const describePopulation = (country, population) => {
+  const percentage = percentageOfWorld(population);
+  return `${country} has ${population} million people, which is about ${percentage}% of the world`;
+};
+
+// 3. Call 'describePopulation' with data for 3 countries of your choice
+
+console.log(describePopulation("China", 1440));
+console.log(describePopulation("Germany", 83));
+console.log(describePopulation("Australia", 25));
 
 // Lecture: Introduction to arrays
+//1. Create an array containing 4 population values of 4 countries of your choice. You may use the values you have been using previously. Store this array into a variable called 'populations'
+
+const populations = [1441, 83, 25, 5];
+
+//2. Log to the console whether the array has 4 elements or not (true or false)
+console.log(populations.length === 4);
+
+//3. Create an array called 'percentages' containing the percentages of the world population for these 4 population values. Use the function 'percentageOfWorld1' that you created earlier to compute the 4 percentage values
+const percentages = [
+  percentageOfWorld(populations[0]),
+  percentageOfWorld(populations[1]),
+  percentageOfWorld(populations[2]),
+  percentageOfWorld(populations[3]),
+];
+console.log(percentages);
 
 // Lecture: Basic array operations (methods)
+
+// 1. Create an array containing all the neighbouring countries of a country of your choice. Choose a country which has at least 2 or 3 neighbours. Store the array into a variable called 'neighbours'
+const neighbours = [
+  "Denmark",
+  "Netherlands",
+  "Belgium",
+  "Luxembourg",
+  "France",
+  "Switzerland",
+  "Austria",
+  "Czechia",
+  "Poland",
+];
+
+// 2. At some point, a new country called 'Utopia' is created in the neighbourhood ofyour selected country. So add it to the end of the 'neighbours' array
+neighbours.push("Utopia");
+
+// 3. Unfortunately, after some time, the new country is dissolved. So remove it from the end of the array
+neighbours.pop();
+
+// 4. If the 'neighbours' array does not include the country ‘Germany’, log to the console: 'Probably not a central European country :D'
+console.log(
+  neighbours.includes("Germany")
+    ? "Likely a central European country"
+    : "Probably not a central European country :D"
+);
+
+// 5. Change the name of one of your neighbouring countries. To do that, find the index of the country in the 'neighbours' array, and then use that index to change the array at that index position. For example, you can search for 'Sweden' in the array, and then replace it with 'Republic of Sweden'.
+const indexOfLuxembourg = neighbours.indexOf("Luxembourg");
+// console.log(indexOfLuxembourg);
+neighbours[indexOfLuxembourg] = "Republic of Sweden";
+console.log(neighbours);
