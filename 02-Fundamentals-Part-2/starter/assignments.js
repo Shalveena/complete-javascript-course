@@ -62,6 +62,8 @@ console.log(`${germanyPop}`);
 */
 
 // Lecture: Functions calling other functions
+/*
+
 //1. Create a function called 'describePopulation'. Use the function type you like the most. This function takes in two arguments: 'country' and 'population', and returns a string like this: 'China has 1441 million people, which is about 18.2% of the world.'
 //2. To calculate the percentage, 'describePopulation' call the 'percentageOfWorld1' you created earlier
 
@@ -130,3 +132,4 @@ const indexOfLuxembourg = neighbours.indexOf("Luxembourg");
 // console.log(indexOfLuxembourg);
 neighbours[indexOfLuxembourg] = "Republic of Sweden";
 console.log(neighbours);
+*/

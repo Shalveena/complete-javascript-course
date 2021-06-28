@@ -307,3 +307,93 @@ console.log(friends.includes(23)); //true
 // can use the includes method to write conditionals:
 if (friends.includes("Tom")) console.log("You have a friend called Tom");
 */
+
+//////////////////////////////////////////////////
+// Lecture 42 Introduction to Objects
+/*
+
+// Array:
+const shalveenaArray = [
+  "Shalveena",
+  "Rohde",
+  2021 - 1987,
+  "student",
+  ["Kajal", "Mauzama", "Anushka", "Anna M", "Prashita"]
+]
+
+// Object:
+const shalveena = {
+  firstName: "Shalveena", // key-value pair
+  lastName : "Rohde", // the key is also called a 'property' of the object
+  age: 2021 - 1987,
+  job: "student",
+  friends: ["Kajal", "Mauzama", "Anushka", "Anna M", "Prashita"]
+}
+// above object has 5 properties. 
+// in objects, the order of the data does not matter. 
+*/
+
+//////////////////////////////////////////////////
+// Lecture 43 Dot vs Bracket Notation
+/*
+const shalveena = {
+  firstName: "Shalveena", // key-value pair
+  lastName: "Rohde", // the key is also called a 'property' of the object
+  age: 2021 - 1987,
+  job: "student",
+  friends: ["Kajal", "Mauzama", "Anushka", "Anna M", "Prashita"],
+};
+
+// How to get values out of objects?
+console.log(shalveena.firstName);
+// OR
+console.log(shalveena["firstName"]);
+
+// with the bracket notation, we can put any expression inside the brackets.
+// for example:
+const nameKey = "Name";
+console.log(shalveena["first" + nameKey]);
+console.log(shalveena["last" + nameKey]);
+
+another example:
+const userInterest = prompt(
+  "What do you want to know about Shalveena? Choose from firstName, lastName, age, job, or friends"
+);
+// console.log(shalveena.userInterest); // prints undefined because shalveena object does not have a property called userInterest.
+console.log(shalveena[userInterest]);
+
+// we can write some logic to give a different message if what the user typed is not actually a property of the shalveena object:
+if (shalveena[userInterest]) {
+  console.log(shalveena[userInterest]);
+} else {
+  console.log(
+    `That is not a valid option. Please choose from firstName, lastName, age, job, or friends.`
+  );
+}
+
+// Adding new properties to object
+shalveena.location = "Melbourne";
+shalveena["gender"] = "female";
+
+console.log(shalveena);
+*/
+
+//Challenge
+//"Shalveena has 5 friends, and her best friend is called Kajal."
+const shalveena = {
+  firstName: "Shalveena", // key-value pair
+  lastName: "Rohde", // the key is also called a 'property' of the object
+  age: 2021 - 1987,
+  job: "student",
+  friends: ["Kajal", "Mauzama", "Anushka", "Anna M", "Prashita"],
+};
+
+//length of shalveena.friends
+// shalveena[friends] = value of friends
+// shalveena[friends].length
+
+const numOfFriends = shalveena.friends.length;
+
+console.log(
+  `${shalveena.firstName} has ${numOfFriends} friends, and her best friend is called ${shalveena["friends"][0]}`
+);
