@@ -50,3 +50,51 @@ console.log(tips);
 const total = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]];
 console.log(total);
 */
+
+// Coding Challenge #3
+/*
+
+// 1. Create an object for Mark and one for John
+// 2. Create a calcBMI method on each object to calculate BMI. Store the BMI to a property and return it from the method.
+
+const mark = {
+  firstName: "Mark",
+  lastName: "Miller",
+  weight: 78,
+  height: 1.69,
+
+  calcBMI: function () {
+    this.BMI = (this.weight / this.height ** 2).toFixed(2);
+    return this.BMI;
+  },
+};
+
+const john = {
+  firstName: "John",
+  lastName: "Smith",
+  weight: 92,
+  height: 1.95,
+
+  calcBMI: function () {
+    this.BMI = (this.weight / this.height ** 2).toFixed(2);
+    return this.BMI;
+  },
+};
+
+//3. Log to the console who has higher BMI. E.g. "John Smith's BMI (28.3) is higher than Mark Miller's (23.9)"
+
+mark.calcBMI();
+console.log(mark.BMI);
+john.calcBMI();
+console.log(john.BMI);
+
+if (mark.BMI > john.BMI) {
+  console.log(
+    `${mark.firstName} ${mark.lastName}'s BMI (${mark.BMI}) is higher than ${john.firstName} ${john.lastName}'s BMI (${john.BMI}). )`
+  );
+} else {
+  console.log(
+    `${john.firstName} ${john.lastName}'s BMI (${john.BMI} is higher than ${mark.firstName} ${mark.lastName}'s BMI (${mark.BMI}). )`
+  );
+}
+*/

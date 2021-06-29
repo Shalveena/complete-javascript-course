@@ -379,6 +379,7 @@ console.log(shalveena);
 */
 
 //Challenge
+/*
 //"Shalveena has 5 friends, and her best friend is called Kajal."
 const shalveena = {
   firstName: "Shalveena", // key-value pair
@@ -397,3 +398,227 @@ const numOfFriends = shalveena.friends.length;
 console.log(
   `${shalveena.firstName} has ${numOfFriends} friends, and her best friend is called ${shalveena["friends"][0]}`
 );
+*/
+
+//////////////////////////////////////////////////
+// Lecture 44 Object Methods
+/*
+// const jonas = {
+//   firstName: "Jonas",
+//   lastName: "Schmedtmann",
+//   birthYear: 1991,
+//   job: "teacher",
+//   friends: ["Michael", "Peter", "Steven"],
+//   hasDriversLicense: true,
+//   calcAge: function (birthYear) {
+//     return 2021 - birthYear;
+//   }, //this is a method. A method is a property that holds a function as the value.
+// };
+
+//accessing the calcAge method:
+// console.log(jonas.calcAge(1991)); // OR
+// console.log(jonas["calcAge"](1991));
+
+// The this keyword/variable (is equal to the object on which the method is called):
+
+// const jonas = {
+//   firstName: "Jonas",
+//   lastName: "Schmedtmann",
+//   birthYear: 1991,
+//   job: "teacher",
+//   friends: ["Michael", "Peter", "Steven"],
+//   hasDriversLicense: true,
+
+//   calcAge: function () {
+//     // console.log(this); // will return the whole jonas object (because jonas is calling the calcAge method below)
+//     return 2021 - this.birthYear;
+//   },
+// };
+
+// console.log(jonas.calcAge());
+
+// calculating the age only once by using the calcAge method and then store it in the object and then retrieve the age as a property from the object:
+
+// const jonas = {
+//   firstName: "Jonas",
+//   lastName: "Schmedtmann",
+//   birthYear: 1991,
+//   job: "teacher",
+//   friends: ["Michael", "Peter", "Steven"],
+//   hasDriversLicense: true,
+
+//   calcAge: function () {
+//     this.age = 2037 - this.birthYear;
+//     return this.age;
+//   },
+// };
+
+// console.log(jonas.calcAge());
+// console.log(jonas.age);
+// console.log(jonas.age);
+// console.log(jonas.age);
+
+//Challenge:
+//get summary that returns a string that summarises the data in the jonas object using a method. E.g. "Jonas is a 30 year old teacher, and he has a/no driver's license."
+
+const jonas = {
+  firstName: "Jonas",
+  lastName: "Schmedtmann",
+  birthYear: 1991,
+  job: "teacher",
+  friends: ["Michael", "Peter", "Steven"],
+  hasDriversLicense: true,
+
+  calcAge: function () {
+    this.age = 2037 - this.birthYear;
+    return this.age;
+  },
+
+  getSummary: function () {
+    return `${this.firstName} is a ${this.calcAge()} year old ${
+      this.job
+    }, and he has ${this.hasDriversLicense ? "a" : "no"} driver's license.`;
+  },
+};
+
+console.log(jonas.getSummary());
+*/
+
+//////////////////////////////////////////////////
+// Lecture 46 Iteration: the for loop
+/*
+
+//They are a control structure. Loops allow us to automate repetitive tasks.
+
+//E.g. lifting weights at the gym, doing 10 repetitions:
+// console.log(`Lifing weights repetition 1 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 2 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 3 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 4 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 5 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 6 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 7 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 8 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 9 🏋️‍♀️`);
+// console.log(`Lifing weights repetition 10 🏋️‍♀️`); // violates the DRY principle
+
+// Instead, do for loop:
+// is similar to if statement, but is a for statement
+// for loop keeps running while condition is TRUE
+for (
+  let rep = 1; //initialise the counter at 1 because we wanted to start at repetition 1
+  rep <= 10; // rep <= 10 is a condition that will be evaluated before each iteration of the loop (the loop will keep running while this condition stays true.)
+  rep++ // after each iteration, we want to increase rep by one, otherwise the condition will never become false and it will be an infinite loop.
+) {
+  console.log(`Lifing weights repetition ${rep} 🏋️‍♀️`);
+}
+*/
+
+//////////////////////////////////////////////////
+// Lecture 47: Looping Arrays, breaking and continuing
+/*
+// For Loop through array
+const jonas = [
+  "Jonas",
+  "Schmedtmann",
+  2021 - 1991,
+  "teacher",
+  ["Michael", "Peter", "Steven"],
+];
+
+for (let i = 0; i < jonas.length; i++) {
+  // console.log(jonas[i], typeof jonas[i]);
+}
+
+// Creating a new array using for loop
+const jonas1 = [
+  "Jonas",
+  "Schmedtmann",
+  2021 - 1991,
+  "teacher",
+  ["Michael", "Peter", "Steven"],
+];
+
+let types = [];
+
+for (let i = 0; i < jonas1.length; i++) {
+  // reading from jonas array
+  console.log(jonas1[i], typeof jonas1[i]);
+
+  // filling types array
+  // types[i] = typeof jonas1[i];
+
+  // another way to fill types array
+  types.push(typeof jonas1[i]);
+}
+
+console.log(types);
+
+// Another example:
+// calculate ages for the birthyears and store in a new array.
+const years = [1991, 2007, 1969, 2020];
+const ages = [];
+
+for (let i = 0; i < years.length; i++) {
+  const calcAge = function () {
+    const age = 2021 - years[i];
+    return age;
+  };
+  ages.push(calcAge());
+}
+console.log(ages);
+
+// easier way to do it!
+for (let i = 0; i < years.length; i++) {
+  ages.push(2021 - years[i]);
+}
+console.log(ages);
+*/
+
+// Continue and Break statements for Loops:
+/*
+// Continue is to exit the current iteration of the loop and continue to the next one.
+// Break is used to completely terminate the whole loop.
+
+const jonas = [
+  "Jonas",
+  "Schmedtmann",
+  2021 - 1991,
+  "teacher",
+  ["Michael", "Peter", "Steven"],
+];
+
+// Imagine we only wanted to print the elements that are strings:
+console.log("--- ONLY STRINGS ---");
+for (let i = 0; i < jonas.length; i++) {
+  if (typeof jonas[i] !== "string") continue; //if this condition is true, then the current iteration is immediately stopped and continued to the next one iteration.
+
+  console.log(jonas[i], typeof jonas[i]);
+}
+
+//Imagine we don't want to log any other elements once we have found a number:
+console.log("---STOP AFTER NUMBER!---");
+for (let i = 0; i < jonas.length; i++) {
+  if (typeof jonas[i] === "number") {
+    console.log(jonas[i], typeof jonas[i]);
+    break;
+  }
+
+  console.log(jonas[i], typeof jonas[i]);
+}
+*/
+
+//////////////////////////////////////////////////
+// Lecture 48: Looping Backwards and Loops in Loops
+const jonas = [
+  "Jonas",
+  "Schmedtmann",
+  2021 - 1991,
+  "teacher",
+  ["Michael", "Peter", "Steven"],
+];
+
+// looping over the array backwards:
+for (let i = jonas.length - 1; i >= 0; i--) {
+  console.log(jonas[i]);
+}
