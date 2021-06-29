@@ -610,6 +610,8 @@ for (let i = 0; i < jonas.length; i++) {
 
 //////////////////////////////////////////////////
 // Lecture 48: Looping Backwards and Loops in Loops
+
+// looping over the array backwards:
 const jonas = [
   "Jonas",
   "Schmedtmann",
@@ -618,7 +620,16 @@ const jonas = [
   ["Michael", "Peter", "Steven"],
 ];
 
-// looping over the array backwards:
 for (let i = jonas.length - 1; i >= 0; i--) {
   console.log(jonas[i]);
+}
+
+// Loops within loops
+// Imagine we have 3 exercises and each exercise should be done 5 times.
+for (let exercise = 1; exercise < 4; exercise++) {
+  console.log(`---- Starting exercise ${exercise}----`);
+
+  for (let i = 1; i < 6; i++) {
+    console.log(`Exercise ${exercise}: This is repetition ${i} 🏋️‍♀️`);
+  }
 }
