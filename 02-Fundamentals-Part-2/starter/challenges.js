@@ -98,3 +98,51 @@ if (mark.BMI > john.BMI) {
   );
 }
 */
+
+// Coding Challenge #4:
+/*
+
+const calcTip = (bill) =>
+  bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+
+const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+const tips = [];
+const totals = [];
+
+for (let bill = 0; bill < bills.length; bill++) {
+  const tip = calcTip(bills[bill]);
+  tips.push(tip);
+  totals.push(tip + bills[bill]);
+}
+
+console.log(tips);
+console.log(totals);
+
+// This function calculates the average of all numbers in the given array.
+const calcAverage = (arr) => {
+  let sum = 0;
+
+  //how will you get one number from the array?
+  // arr[0] + arr[1] + arr[2] .... arr[9]
+  // let sum = 0
+  // sum = sum + arr[i]
+
+  for (let i = 0; i < arr.length; i++) {
+    // sum = sum + arr[i];
+    sum += arr[i];
+  }
+
+  // console.log(sum);
+
+  const average = sum / arr.length;
+  return average;
+};
+
+//Testing whether the calcAverage function works:
+// const test = [1, 2, 3];
+
+// console.log(calcAverage(test));
+
+console.log(calcAverage(totals));
+console.log(calcAverage(tips));
+*/

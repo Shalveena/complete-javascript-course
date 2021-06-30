@@ -610,6 +610,7 @@ for (let i = 0; i < jonas.length; i++) {
 
 //////////////////////////////////////////////////
 // Lecture 48: Looping Backwards and Loops in Loops
+/*
 
 // looping over the array backwards:
 const jonas = [
@@ -633,3 +634,35 @@ for (let exercise = 1; exercise < 4; exercise++) {
     console.log(`Exercise ${exercise}: This is repetition ${i} 🏋️‍♀️`);
   }
 }
+*/
+
+//////////////////////////////////////////////////
+// Lecture 49: The while Loop
+/*
+
+// For Loop
+// for (let rep = 1; rep <= 10; rep++) {
+//   console.log(`Lifing weights repetition ${rep} 🏋️‍♀️`);
+// }
+
+// While Loop
+// in while loop, we can only specify a condition. We want to keep the loop running while the condition is true.
+// let rep = 1;
+
+// while (rep <= 10) {
+//   console.log(`WHILE: Lifing weights repetition ${rep} 🏋️‍♀️`);
+//   rep++;
+// }
+
+// While loop is more versatile than for loop and can be used in larger variety of situations. This is because it only needs a condition, it does not need a counter. This happens when you don't know beforehand how many iterations the loop would have.
+
+//E.g roll a dice and keep rolling until you get a 6, at which point you'll stop.
+let dice = Math.trunc(Math.random() * 6) + 1;
+// console.log(dice);
+
+while (dice !== 6) {
+  console.log(`You rolled a ${dice}`);
+  dice = Math.trunc(Math.random() * 6) + 1;
+  if (dice === 6) console.log("You rolled a 6 so the loop will end!");
+}
+*/
