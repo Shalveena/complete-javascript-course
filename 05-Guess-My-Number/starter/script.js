@@ -14,13 +14,86 @@ console.log(document.querySelector(".guess").value);
 
 */
 
+// addEventListener method listens for the event. We pass two arguments to it; the first argument is the event that it listens for ("click") and the second argument is what it should do when the event happens (function). This second argument is called the event handler.
+
+// console.log(document.querySelector(".guess").value);
+
 // Building the game ///////////////////////////////////////
-// A. Target the "Check!" button so that something happens when it is clicked
-// B. When it is clicked, we want to save the number input by the user in a new variable
-// C. and we want to write some logic for what would happen if the user did not input any number
 
+// Define the secret number
+let secretNumber = Math.trunc(Math.random() * 20) + 1; // to make it 1-21
+
+// Set starting score
+let score = 20;
+
+// Set highscore
+let highscore = 0;
+
+// Target the "Check!" button so that something happens when it is clicked
 document.querySelector(".check").addEventListener("click", function () {
-  // addEventListener method listens for the event. We pass two arguments to it; the first argument is the event that it listens for ("click") and the second argument is what it should do when the event happens (function). This second argument is called the event handler.
+  // When it is clicked, save the number input by the user in a new variable
+  const guess = Number(document.querySelector(".guess").value); // the value we got from the user input is a string.
 
-  const guess = document.querySelector(".guess").value;
+  // if the user did not input any number
+  if (!guess) {
+    document.querySelector(".message").textContent = "⛔ No number!";
+
+    // if guess is correct
+  } else if (guess === secretNumber) {
+    document.querySelector(".message").textContent = "🎉 Correct Number!";
+    document.querySelector(".number").textContent = secretNumber;
+    if (highscore < score) {
+      highscore = score;
+      document.querySelector(".highscore").textContent = highscore;
+    }
+
+    //change css style
+    document.querySelector("body").style.backgroundColor = "#60b347";
+    document.querySelector(".number").style.width = "30rem";
+
+    // if guess is greater than secret number
+  } else if (guess > secretNumber) {
+    // need another if statement to add that score should be > 0
+    if (score > 1) {
+      document.querySelector(".message").textContent = "📈 Too high!";
+      score--;
+      document.querySelector(".score").textContent = score;
+    } else {
+      document.querySelector(".message").textContent = "💥 You lose!";
+
+      document.querySelector(".score").textContent = 0;
+    }
+
+    // if guess is lower than secret number
+  } else if (guess < secretNumber) {
+    if (score > 1) {
+      document.querySelector(".message").textContent = "📉 Too low!";
+      score--;
+      document.querySelector(".score").textContent = score;
+    } else {
+      document.querySelector(".message").textContent = "💥 You lose!";
+
+      document.querySelector(".score").textContent = 0;
+    }
+  }
+
+  // When Again button is clicked, secret number, and score are reset
+
+  document.querySelector(".again").addEventListener("click", function () {
+    // restore initial value of the secretNumber
+    secretNumber = Math.trunc(Math.random() * 20) + 1;
+    // restore initial value of the score
+    score = 20;
+    // restore initial condition of the message
+    document.querySelector(".message").textContent = "Start guessing...";
+    // restore initial condition of the score message
+    document.querySelector(".score").textContent = score;
+    // restore initial condition of the guess input field
+    document.querySelector(".guess").value = "";
+    // restore initial condition of the number message
+    document.querySelector(".number").textContent = "?";
+    // restore css styles
+    document.querySelector("body").style.backgroundColor = "#222";
+    document.querySelector(".number").style.width = "15rem";
+  });
 });
