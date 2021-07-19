@@ -226,6 +226,7 @@ addArrow(1, 2); // error: arguments is not defined.
 // Primitives vs Objects ///////////////////
 
 // Primitives example
+/*
 let age = 30;
 let oldAge = age;
 age = 31;
@@ -243,3 +244,41 @@ const friend = me;
 friend.age = 27;
 console.log('Friend:', friend); // Friend: {name: "Jonas", age: 27}
 console.log('Me:', me); // Me: {name: "Jonas", age: 27} Why did this change? It is because both friend and me point to the same object in the memory heap (see Notion notes)!
+*/
+
+// Primitives vs Objects in practice
+
+// Each primitive value will be saved into its own piece of memory in the call stack.
+let lastName = 'Williams';
+let oldLastName = lastName;
+lastName = 'Davis';
+console.log(lastName, oldLastName);
+
+// But an object is a reference value because it will be stored in the heap and the stack just keeps a reference to the memory position at which the object is stored in the heap!
+const jessica = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+};
+
+const marriedJessica = jessica;
+marriedJessica.lastName = 'Davis';
+console.log('before marriage:', jessica);
+console.log('after marriage:', marriedJessica);
+
+// So how can we copy an object properly? Use Object.assign function to merge two objects
+const jessica2 = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+  family: ['Alice', 'Bob'],
+};
+
+const jessicaCopy = Object.assign({}, jessica2); // this will merge jessica2 with an empty object, creating a new array.
+jessicaCopy.lastName = 'Davis';
+jessicaCopy.family.push('Mary');
+jessicaCopy.family.push('John');
+
+console.log(jessica2);
+console.log(jessicaCopy);
+// NOTE: this only does a 'shallow copy' not a deep clone. That is, if the jessica2 object had another object or array inside it (e.g. the family array), that inner object or array will not be copied (it will still point to the same place in memory instead of making a new copy!). So if we change the array in one jessica object, it will also do it in the other one.
