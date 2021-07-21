@@ -351,6 +351,7 @@ const guests = restaurant.numGuests ?? 10; // 0
 */
 
 // Challenge //////////////////
+/*
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
@@ -400,3 +401,200 @@ console.log(players1, players2);
 const [gk, ...fieldPlayers] = players1;
 console.log(gk);
 console.log(fieldPlayers);
+
+// 3. Create an array 'allPlayers' containing all players of both teams (22 players)
+const allPlayers = [...players1, ...players2];
+console.log('---allPlayers array---');
+console.log(allPlayers);
+
+// 4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+console.log(players1Final);
+
+// 5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+// const {
+//   odds: { team1 },
+// } = game;
+// console.log(team1);
+
+const {
+  odds: { team1, x: draw, team2 },
+} = game;
+console.log(team1, draw, team2);
+
+// 6. Write a function ('printGoals') that receives an arbitrary number of player names (not an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+// Test data for 6.: First, use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. Then, call the function again with players from game.scored
+
+// The function should put the values it receives into an array, then pass it in as an argument
+// it should then print to the console the names of each player
+// and it should print to the console the total number scores, which is based on the length of the array passed in
+const printGoals = function (...playersNames) {
+  for (let i = 0; i < playersNames.length; i++) {
+    console.log(playersNames[i]);
+  }
+  console.log(playersNames.length);
+};
+
+printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+
+printGoals(...game.scored);
+
+// 7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, without using an if/else statement or the ternary operator
+
+// console.log(`${team1 < team2 || team2 < team1} is more likely to win`);
+
+team1 < team2 && console.log(`Team 1 is more likey to win`);
+team1 > team2 && console.log(`Team 2 is more likey to win`);
+*/
+
+// Looping over Arrays: the for-of loop /////////////////
+/*
+
+// Looping through the menu items
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// console.log(menu);
+for (const item of menu) console.log(item);
+// will automatically loop over the entire array and for each iteration it will give us access to the current array element.
+
+// We can still use the continue and break keywords!
+
+// What if we also wanted the current idex and not just the current element? This can be a pain, but you can do it like this:
+// for (const item of menu.entries()) {
+//   // console.log(item); // [0, "Focaccia"] (then the next iteration would be [1, "Bruschetta"] and so on)
+//   console.log(`${item[0] + 1}: ${item[1]}`); // old way
+// }
+
+for (const [i, el] of menu.entries()) {
+  // console.log(item); // [0, "Focaccia"] (then the next iteration would be [1, "Bruschetta"] and so on)
+  console.log(`${i + 1}: ${el}`); // new way
+}
+
+console.log(menu.entries()); // Array Iterator {}
+*/
+
+// Enhanced Object Literals ////////////////////
+
+// The following is an object literal:
+const objectExample = {
+  property1: 'value1',
+  property2: 'value2',
+  property3: 'value3',
+  method1: function (x) {
+    console.log(x);
+  },
+};
+
+// ES6 introduced three ways that make it easier to write object literals.
+
+// 1. Let's say the opening hours object is outside the restaurants object, and we want to also include it in the restaurants object:
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+const restaurant2 = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  // old way of doing it:
+  // openingHours: openingHours // the problem: the property name is exactly the same as the variable name from which we are getting the object. With enhanced object literals, we don't have to write that!
+
+  // ES6 enhanced object literals:
+  openingHours,
+
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    address,
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}`
+    );
+  },
+
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
+};
+
+console.log(restaurant2);
+
+// 2. When creating methods, in Es6 we no longer have to create a property and then set it to a function expression.
+const restaurant3 = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  openingHours,
+
+  // we no longer have to do it this way:
+  // order: function (starterIndex, mainIndex) {
+  //   return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  // },
+
+  // Instead, we can do this:
+  order(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+
+  orderPasta(ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}`
+    );
+  },
+
+  orderPizza(mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
+};
+
+// 3. The third enhancement is that we can compute property names instead of writing them out manually and literally:
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const openingHours2 = {
+  [days[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [days[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [days[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
