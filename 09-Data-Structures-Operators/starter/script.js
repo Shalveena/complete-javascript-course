@@ -795,4 +795,165 @@ for (const [team, odd] of oddsEntries) {
 }
 */
 
-// Sets /////////////////////
+// Sets //////////////////////
+/*
+// Are a data structure, like objects and arrays.
+// Sets are a collection of unique values so that means a Set can never have any duplicates.
+
+const ordersSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pizza']);
+
+console.log(ordersSet); // The set will only have Pasta, Pizza and Risotto {"Pasta", "Pizza", "Risotto"}
+
+// Sets are also iterables, just like arrays. However, they are different from arrays because (a) the elements in the Set are unique and (b) the order of elements in the Set is irrelevant.
+
+// Remember that strings are also iterables, so we can do this:
+console.log(new Set('Jonas')); // {"J", "o", "n", "a", "s"}
+
+// Working with Sets
+
+// 1. Getting the size of a Set:
+console.log(ordersSet.size); // 3
+
+// 2. Checking whether a certain element is in a Set:
+console.log(ordersSet.has('Pizza')); // true
+console.log(ordersSet.has('Bread')); // false
+
+// 3. Adding new elements to a Set:
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+console.log(ordersSet); // {"Pasta", "Pizza", "Risotto", "Garlic Bread"} Note: the Garlic Bread got added, but only once.
+
+// 4. Deleting elements:
+ordersSet.delete('Risotto');
+console.log(ordersSet); // {"Pasta", "Pizza", "Risotto"}
+
+// 5. Retrieving info from a Set:
+// In Sets there are no indexes and in fact there is no way of getting info out of a Set. If you need to do so, you should use an array.
+
+// 6. Deleting all of the elements of a Set:
+// ordersSet.clear();
+// console.log(ordersSet);
+
+// Looping over Sets
+// Sets are also iterables and therefore we can loop over them
+for (const order of ordersSet) {
+  console.log(order); // Pasta Pizza Garlic Bread
+}
+
+// Big use case for Sets
+// Main use-case is to duplicate values in an array
+
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+// say we are interested in knowing just how mnay different roles there are in the restaurant
+// const staffUnique = new Set(staff);
+// console.log(staffUnique); // {"Waiter", "Chef", "Manager"}
+
+// now we want to make this into an array
+// Conversion from Set to array:
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique); //['Waiter', 'Chef', 'Manager'];
+
+// checking how many different roles there are:
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+);
+
+// Can use this to find out how many different letters there are in a string. For example:
+console.log(new Set('shalveenarohde').size); // 10
+*/
+
+// Maps - Fundamentals //////////////
+/*
+// A map is a datastructure that we can use to map values to keys. Just like in an object, in Maps the data is stored in key-value pairs. The big difference between objects and maps is that in maps the keys can have any type. In objects, the keys are always strings but in maps we can have any type of key! It could even be objects or arrays, or other maps!
+
+// Easiest way to create a map is to create an empty map and then use the .set method to fill it.
+const rest = new Map();
+rest.set('name', 'Classico Italiano'); // key-value pair
+rest.set(1, 'Firenze, Italy'); // this doesn't only update the map that it is called on, but it also returns the updated map.
+console.log(rest.set(2, 'Lisbon, Portugal')); // {"name => "Classico Italiano", 1 => "Firenze, Italy", 2 => "Lisbon, Portugal"}
+
+// The fact that the .set method returns the updated map means that we an actually chain multiple .set methods together as follows:
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+// Reading data from the map - the .get method
+// All we have to do is pass in the name of the key into the get method.
+console.log(rest.get('name')); // Classico Italiano
+console.log(rest.get(true)); // "We are open :D"
+
+// Clever use of the boolean key in our rest map:
+const time = 21;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); // this will compute to rest.get(true) or rest.get(false). Result will be either: "We are open :D" or "We are closed :(" )
+// While the above is clever, it is not very readable haha!
+
+// Checking if a map contains a certain key: .has method
+console.log(rest.has('categores')); // true
+
+// Deleting keys from a map:
+rest.delete(2);
+console.log(rest);
+
+// Size property:
+console.log(rest.size); // 7
+
+// Removing all elements from the map:
+// rest.clear();
+// console.log(rest);
+
+// Example showing that we can use objects or arrays as map keys:
+// rest.set([1, 2], 'Test');
+// console.log(rest);
+// Getting the data based on the array key:
+const arr = [1, 2];
+rest.set(arr, 'Test');
+console.log(rest.get(arr)); // Test
+
+// Since DOM elements are nothing more than special types of objects, we can also use them as keys:
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+*/
+
+// Maps: Iteration
+/*
+// another way of populating a new map without using the set method:
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct 🎉'],
+  [false, 'Try again!'],
+]);
+// The first element in the nested array will be the key and the second one will be the value.
+
+console.log(question);
+
+// Convert object to map
+// const hoursMap = new Map(Object.entries(openingHours)); // we can use Object.entries() because the array of that is exactly the same as [[], [], []]
+
+// Iterating through a map
+// Maps are also iterables so they can be looped through.
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  // We only want to print the element if the key is a number
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+// say we wanted to get the answer from the user through a prompt:
+// const answer = Number(prompt('Your answer:'));
+// console.log(answer);
+// console.log(question.get(question.get('correct') === answer));
+
+// Converting a map back to an array:
+console.log([...question]); // building a new array and then unpacking the question map inside it!
+
+// Maps also have the other methods that were available on arrays:
+console.log(...questions.entries);
+console.log(...questions.keys); // to get all the keys
+console.log(...questions.vaues); // to get all the values
+*/
