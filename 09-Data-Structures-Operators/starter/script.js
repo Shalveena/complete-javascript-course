@@ -953,7 +953,58 @@ for (const [key, value] of question) {
 console.log([...question]); // building a new array and then unpacking the question map inside it!
 
 // Maps also have the other methods that were available on arrays:
-console.log(...questions.entries);
-console.log(...questions.keys); // to get all the keys
-console.log(...questions.vaues); // to get all the values
+console.log(...question.entries());
+console.log(...question.keys()); // to get all the keys
+console.log(...question.vaues()); // to get all the values
 */
+
+// Which Data Structure to Choose?
+// 1. Do we just need a simple list of values? If yes, then we use an Array or Set.
+// 2. Do we need a key value pair? If yes, then we use Objects or Maps. (Keys allow us to describe values.)
+
+// In modern JS applications, web APIs are usually the most common source of data. Data from web APIs usually comes in a special data formal called a JSON - JSON is essential just a long string, but it can easily be converted into an object because it uses the same formatting as JS objects and arrays.
+
+// Note: Creating an array of objects is extremely common!
+
+// Arrays vs Sets
+// see slide
+
+// Objects vs Maps
+// see slide
+
+// Coding Challenge 03
+
+const gameEvents = new Map([
+  [17, '⚽ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽ GOAL'],
+  [80, '⚽ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+// 1. Create an array 'events' of the different game events that happened (no duplicates)
+
+console.log(gameEvents.values());
+const events = [...new Set(gameEvents.values())];
+console.log(events);
+
+// 2. Remove the yellow card from minute 64 from the game events log.
+gameEvents.delete(64);
+// console.log(gameEvents);
+
+// 3. Compute and log the following string to the console: "An event happened, on average, every 9 minutes"
+console.log(
+  `An event happened, on average, every ${90 / gameEvents.size} minutes`
+);
+
+// 4. Loop over 'gameEvents' and log each element to the console, marking whether it happened in the first or second half (after 45min). Like this: [FIRST HALF] 17: GOAL
+
+for (const [min, event] of gameEvents) {
+  console.log(`[${min < 45 ? 'FIRST HALF' : 'SECOND HALF'}] ${min}: ${event}`);
+}
