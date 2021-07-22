@@ -473,6 +473,7 @@ console.log(menu.entries()); // Array Iterator {}
 */
 
 // Enhanced Object Literals ////////////////////
+/*
 
 // The following is an object literal:
 const objectExample = {
@@ -598,3 +599,200 @@ const openingHours2 = {
     close: 24,
   },
 };
+*/
+
+// Optional Chaining ///////////////////////
+/*
+console.log(restaurant.openingHours.mon); // undefined
+// console.log(restaurant.openingHours.mon.open); // error!
+
+// We could check whether monday exists and log the open time if it does by doing this:
+if (restaurant.openingHours.mon) console.log(restaurant.openingHours.mon.open); // if mon doesn't exist then it just won't log anything.
+
+// But imagine if we didn't even know if the restaurant had the openingHours property. Then it gets messy and can get out of hand quickly when we have deeply nested objects:
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open);
+
+// ES 2020 introduced Optional Chaining - a solution for the above. With Optional Chaining, if a certain property doesn't exist, undefined is returned immediately.
+console.log(restaurant.openingHours.mon?.open); // only if the property before the ? exists (that is according to the nullish concept - a property exists if it is not null and not undefined. So if it is 0 or an empty string, it still exists.), then the .open property will be read from there. Otherwise, immediaetely undefined will be returned.
+
+// Example:
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// We want to loop over this array and log to the console whether the restaurant is open or closed on each day
+for (const day of days) {
+  // console.log(day);
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}`); // use nullish coalescing operator instead of OR operator because otherwise there will be problems where the value is 0.
+}
+
+// Optional chaining also works on calling methods. We can check whether a method actually exists before we call it.
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+
+// It also works on arrays:
+const users = [];
+console.log(users[0]?.name ?? 'User array empty'); // "User array empty"
+
+const usersNew = [{ name: 'Jonas', email: 'hello@jonas.io' }];
+console.log(usersNew[0]?.name ?? 'User array empty'); // Jonas
+
+// without optional chaining, we would have to do something like:
+if (usersNew.length > 0) console.log(usersNew[0].name);
+else console.log('User array empty');
+*/
+
+// Looping Objcts: Object Keys, Values and Entries //////////
+/*
+// Looping over object property NAMES:
+
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+for (const day of Object.keys(openingHours)) {
+  console.log(day);
+}
+
+// checking what Object.keys is:
+const properties = Object.keys(openingHours);
+console.log(properties); // ["thu", "fri", "sat"]
+// we can use this to log how many days we are open:
+console.log(`We are open ${properties.length} days of the week.`); // We are open 3 days of the week.
+
+// we can now loop over this array!
+for (const day of properties) {
+  console.log(day);
+}
+
+// Now we can actually do something cool and build a string where we add to it by looping over the array:
+let openStr = `We are open on ${properties.length} days: `;
+for (const day of properties) {
+  // openStr = openStr + `${day}`
+  openStr += `${day}, `;
+}
+
+console.log(openStr);
+
+// Looping over object property VALUES:
+const values = Object.values(openingHours);
+console.log(values); // [{open: 12, close: 22}, {open: 11, close: 23}, {open: 0, close: 24}]
+
+// Now we can loop over the values variable (which is an array)
+for (const value of values) {
+  console.log(value);
+}
+
+// We can ony really loop over the entire object if we loop over the entries. Looping over the entries (entries are the properties + values together):
+
+const entries = Object.entries(openingHours);
+console.log(entries); // [["thu", {open: 12, close: 22}], ["fri", {...}], ["sat", {...}]] Each key-value pair is put into an array and the arrays are nested inside a bigger array.
+
+// looping through the entries array now:
+for (const x of entries) {
+  console.log(x);
+} // will log each key-value pair
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`); // using destructuring here
+}
+*/
+
+// Challenge 2 /////////////////////////
+/*
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// 1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+for (const [i, player] of game.scored.entries()) {
+  console.log(`Goal ${i + 1}: ${player}`);
+}
+
+// 2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+
+// my solution
+const oddsArr = Object.values(game.odds);
+let sum = 0;
+for (const odd of oddsArr) {
+  sum += odd;
+}
+let avgOdds = sum / oddsArr.length;
+console.log(avgOdds);
+
+// Jonas' solution
+const odds = Object.values(game.odds);
+let average = 0;
+for (const odd of odds) {
+  average += odd;
+}
+average /= odds.length;
+console.log(average);
+
+// 3. Print the 3 odds to the console, but in a nice formatted way, exactly like this:
+// Odd of victory Bayern Munich: 1.33
+// Odd of draw: 3.25
+// Odd of victory Borrussia Dortmund: 6.5
+// Get the team names directly from the game object, don't hardcode them(except for "draw"). Hint: Note how the odds and the game objects have the same property names 😉
+
+// a. Need to get the team names and odds from the odds object:
+const oddsEntries = Object.entries(game.odds);
+console.log(oddsEntries);
+
+// b. Loop over the oddsEntries array:
+for (const [team, odd] of oddsEntries) {
+  // d. If the team element is "x", then the string should say "draw", otherwise, it should say the name of the team (which we can get from the game object)
+  const str = team === 'x' ? 'draw' : game[team];
+  // c. log the string to the console:
+  console.log(`Odd of ${str}: ${odd}`);
+}
+*/
+
+// Sets /////////////////////
