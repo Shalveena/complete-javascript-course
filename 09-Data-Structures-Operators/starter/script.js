@@ -973,7 +973,7 @@ console.log(...question.vaues()); // to get all the values
 // see slide
 
 // Coding Challenge 03
-
+/*
 const gameEvents = new Map([
   [17, '⚽ GOAL'],
   [36, '🔁 Substitution'],
@@ -1008,3 +1008,263 @@ console.log(
 for (const [min, event] of gameEvents) {
   console.log(`[${min < 45 ? 'FIRST HALF' : 'SECOND HALF'}] ${min}: ${event}`);
 }
+*/
+
+// Working with Strings ////////////////
+/*
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+// 1. Getting the character of a string at a certain position:
+console.log(plane[0]); // A
+console.log(plane[1]); // 3
+console.log(plane[2]); // 2
+// We can do the same directly on a string:
+console.log('B737'[0]); // B
+
+// Reading the length property of strings:
+console.log(airline.length); // 16
+// OR doing it directly:
+console.log('TAP Air Portugal'.length); // 16
+
+// 2. Methods for strings
+
+// a. IndexOf: getting the position of a certain letter in the string
+// Note, the index starts from 0 (strings are 0 based). Spaces also count as characters.
+// Is case sensitive
+
+console.log(airline.indexOf('r')); // 6
+
+// IndexOf gives the position of the first occurence of the given letter. If you want the last occurence, you can use lastIndexOf:
+console.log(airline.lastIndexOf('r')); // 10
+
+// Searching for entire words:
+console.log(airline.indexOf('Air')); // 4
+
+// Note: if the character you are searching for does not exist, it will return -1
+
+// Use case:
+// To extract parts of a string using the slice method. The slice method needs indices as arguments. It returns a new string.
+
+// the index is the position at which the extraction will start
+// Note: it doesn't change the underlying string! This is because it is virtually mutate strings because they are primitives.
+console.log(airline.slice(4)); // Air Portugal (called a sub-string)
+// if we wanted to use this sub-string now, we would need to store it into a variable or some other data structure.
+
+// we can also specify an end parameter:
+// Note: the slice method/extraction will stop just before the position of the character given in second argument. It stops extracting just before reaching index 7.
+console.log(airline.slice(4, 7)); // Air
+
+// Up until this point, we have just hard-coded the index. But many times, we don't know the string we will receive yet. Let's now try to extract the first word of the string but without knowing any of  the indices. This is where indexOf and lastIndexOf become important!
+console.log(airline.slice(0, airline.indexOf(' '))); // TAP
+// extracting the last word:
+console.log(airline.slice(airline.lastIndexOf(' ') + 1)); // Portugal
+
+// we can even define a negative begin argument for the slice method:
+console.log(airline.slice(-3)); // gal
+// Giving a negative number to the slice method starts extracting from the end, moving left.
+
+// we can also give the second argument a negative number:
+console.log(airline.slice(0, -1)); // TAP Air Portuga
+
+// Practice: write a function that receives an airplane seat and logs to the console whether it is a middle seat or not
+const checkMiddleSeat = function (seatNumber) {
+  // B and E are the middle seats
+  // We need to take the last character of the seat and test whether it is a B or an E
+
+  const seat = seatNumber.slice(-1);
+  console.log(seat === 'B' || seat === 'E' ? 'Middle Seat' : 'Not middle seat');
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+// b. Changing the case of a string: toLowerCase and toUpperCase. Note: these don't mutate the original string.
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+console.log(airline);
+
+// More practical example: fix the capitalisation in a passenger's name:
+const passenger = 'jOnAS';
+const passengerLower = passenger.toLowerCase(); // jonas
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// Another example: comparing email addresses of passengers:
+const email = 'hello@jonas.io';
+const loginEmail = ' Hello@Jonas.Io \n'; // \n is the enter character.
+
+const lowerEmail = loginEmail.toLowerCase();
+const trimmedEmail = lowerEmail.trim();
+console.log(trimmedEmail);
+//refactoring:
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+
+// c. Replacing parts of strings. The replace method also creates a new string
+
+const priceGB = '288,97&';
+const priceUS = priceGB.replace('&', '$').replace(',', '.');
+console.log(priceUS);
+
+// replacing entire word instead of just a single character:
+const announcement =
+  'All passengers must go to boarding door 23. That is boarding door 23!';
+console.log(announcement.replace('door', 'gate')); // only replaced first instance of "door"
+//use replaceAll to replace all instances of the word
+console.log(announcement.replaceAll('door', 'gate'));
+
+// if cannot use replaceAll, can use regular expression instead:
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Three simple methods that return Booleans: includes, startsWith, and endsWith
+
+// includes
+const airplane = 'Airbus A320neo';
+console.log(airplane.includes('A320')); // true. Note: case sensitive
+
+// startsWith
+console.log(airplane.startsWith('Bo')); // false
+console.log(airplane.startsWith('Air')); // true
+
+// endsWith
+// want to check if the plane's name starts with Airbus and ends with neo:
+if (airplane.startsWith('Airbus') && airplane.endsWith('neo')) {
+  console.log('Part of the new Airbus family');
+}
+
+// Practice exercise:
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You cannot take that on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+
+checkBaggage(`I have a laptop, some Food and a pocket Knife`);
+checkBaggage(`Socks and camera`);
+checkBaggage(`Got some snacks and a gun for protection`);
+
+// d. Split method
+// Allows us to split a string into multiple parts based on a divider string.
+console.log('a+very+nice+string'.split('+')); // the split method will split up the string by the + sign and then store the results into elements of a new array: ["a", "very", "nice", "string"]
+console.log('Jonas Schmedtmann'.split(' ')); // ["Jonas", "Schmedtmann"]
+
+// can now use the power of destructuring to create variables like this:
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+console.log(firstName);
+
+// d. Join method:
+// let's say we want to make the last name uppercase and want to add "Mr" to the beginning:
+['Mr.', firstName, lastName.toUpperCase()].join(' ');
+
+// Use example: to capitalise a name
+const capitaliseName = function (name) {
+  const names = name.split(' ');
+  const namesUpper = [];
+
+  for (const n of names) {
+    // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    // OR
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(' '));
+};
+
+capitaliseName('jessica ann smith davis');
+capitaliseName('shalveena rohde');
+
+// Padding a string:
+// Padding a string means to add a number of characters to a string until the string has a certain desired length
+
+// padStart
+const message = 'Go to gate 23!';
+// padStart method adds padding to the start of the string. It adds the character given as the second argument and keeps adding it until the string contains the number of characters specified in the first argument.
+// padEnd
+// adds padding at the end. Works the same as the padStart method.
+
+console.log(message.padStart(25, '+').padEnd(30, '+'));
+console.log('Jonas'.padStart(25, '+').padEnd(30, '+'));
+
+// Practice use case:
+// When you see a credit card number, you don't actually see the entire number. It is usually masked and you only see the last few numbers.
+const maskCreditCard = function (number) {
+  const str = number + ''; // converting number to string
+  // need to take out the last four numbers and then create a new string where the other characters are replaced with some symbols
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(64637836));
+console.log(maskCreditCard(123439391812803));
+console.log(maskCreditCard('191903974109142'));
+
+// Repeat method:
+// Allows us to repeat the same string multiple times
+const message2 = 'Bad weather...All departures delayed... ';
+// create a bigger string repeating this above string multiple times
+console.log(message2.repeat(5));
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'✈'.repeat(n)}`);
+};
+
+planesInLine(3);
+planesInLine(9);
+*/
+
+// Coding Challenge
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+// Program must receive list of variable names written in underscore_case and convert them to camelCase
+const btn = document.querySelector('button');
+const text = document.querySelector('textarea');
+
+btn.addEventListener('click', function () {
+  // get the input from the textarea
+  const userInput = document.querySelector('textarea').value;
+
+  // put it into lower case
+  const inputLower = userInput.toLowerCase();
+  // console.log(inputLower);
+
+  // put it into an array separated by the space
+  const usArr = inputLower.split('\n');
+  console.log(usArr);
+
+  // loop through the array, replacing the underscore with a capital letter
+  const camelArr = [];
+
+  for (const e of usArr) {
+    const findChar = e[e.indexOf('_') + 1];
+    const replaceChar = e[e.indexOf('_') + 1].toUpperCase();
+    const upperCase = e.replace(findChar, replaceChar);
+    console.log(upperCase);
+    // camelArr.push(e.replace('_', e[e.indexOf('_') + 1].toUpperCase()));
+  }
+
+  // console.log(camelArr);
+  // // put it into an array
+  // const underscoreCaseArr = document
+  //   .querySelector('textarea')
+  //   .value.split('\n');
+  // // console.log(underscoreCaseArr);
+
+  // // join it into a string separated by " "
+  // const underscoreStr = underscoreCaseArr.join(' ');
+  // // console.log(underscoreStr);
+
+  // //put it into lower case
+  // const underscoreLower = underscoreStr.toLowerCase();
+  // console.log(underscoreLower);
+
+  // // make the first letter after the underscore into capital
+  // underscoreLower[underscoreLower.in];
+});
