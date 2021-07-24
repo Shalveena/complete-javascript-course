@@ -1243,11 +1243,11 @@ btn.addEventListener('click', function () {
   // loop through the array,
   for (const text of usArr) {
     // separate the text into three parts:
-    // one before the underscore
+    // (a) one before the underscore
     const strBeforeUS = text.slice(0, text.indexOf('_'));
-    // and one after the underscore
+    // (b) one after the underscore
     const strAfterUS = text.slice(text.indexOf('_') + 1);
-    // take the first letter of word after underscore, capitalise it and put it with the rest of the word
+    // (c) take the first letter of word after underscore, capitalise it and put it with the rest of the word
     const strAfterUSCap = strAfterUS[0].toUpperCase() + strAfterUS.slice(1);
     // make the new word with right format by putting the parts together
     const camelCaseStr = strBeforeUS + strAfterUSCap;
