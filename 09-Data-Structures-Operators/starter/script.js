@@ -1238,33 +1238,24 @@ btn.addEventListener('click', function () {
   // put it into an array separated by the space
   const usArr = inputLower.split('\n');
   console.log(usArr);
+  let csArr = [];
 
-  // loop through the array, replacing the underscore with a capital letter
-  const camelArr = [];
-
-  for (const e of usArr) {
-    const findChar = e[e.indexOf('_') + 1];
-    const replaceChar = e[e.indexOf('_') + 1].toUpperCase();
-    const upperCase = e.replace(findChar, replaceChar);
-    console.log(upperCase);
-    // camelArr.push(e.replace('_', e[e.indexOf('_') + 1].toUpperCase()));
+  // loop through the array,
+  for (const text of usArr) {
+    // separate the text into three parts:
+    // one before the underscore
+    const strBeforeUS = text.slice(0, text.indexOf('_'));
+    // and one after the underscore
+    const strAfterUS = text.slice(text.indexOf('_') + 1);
+    // take the first letter of word after underscore, capitalise it and put it with the rest of the word
+    const strAfterUSCap = strAfterUS[0].toUpperCase() + strAfterUS.slice(1);
+    // make the new word with right format by putting the parts together
+    const camelCaseStr = strBeforeUS + strAfterUSCap;
+    // push the string into the array
+    csArr.push(camelCaseStr);
   }
 
-  // console.log(camelArr);
-  // // put it into an array
-  // const underscoreCaseArr = document
-  //   .querySelector('textarea')
-  //   .value.split('\n');
-  // // console.log(underscoreCaseArr);
-
-  // // join it into a string separated by " "
-  // const underscoreStr = underscoreCaseArr.join(' ');
-  // // console.log(underscoreStr);
-
-  // //put it into lower case
-  // const underscoreLower = underscoreStr.toLowerCase();
-  // console.log(underscoreLower);
-
-  // // make the first letter after the underscore into capital
-  // underscoreLower[underscoreLower.in];
+  for (const [i, e] of csArr.entries()) {
+    console.log(`${e.padEnd(21, ' ')}${'✅'.repeat(i + 1)}`);
+  }
 });
