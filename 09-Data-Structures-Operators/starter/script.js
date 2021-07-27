@@ -1223,6 +1223,32 @@ planesInLine(9);
 document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
 
+// Jonas' solution ////////////////
+const button = document.querySelector('button');
+
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+
+  // split the string into an array:
+  const rows = text.split('\n');
+
+  // loop through the array
+  for (const [i, row] of rows.entries()) {
+    // for each row, put it into lower case, trim it, and split it into two words. Save each word into a new variable using deconstruction
+    const [first, second] = row.toLowerCase().trim().split('_');
+    // console.log(row, first, second);
+
+    // put the first and second word together, making sure to replace the first character of the second word with an uppercase letter.
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+
+    console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`); // when we want empty spaces, we can just leave the second argument out of the padEnd method (instead of putting a string with a space in it)
+  }
+});
+// My solution ///////////////////
+/*
 // Program must receive list of variable names written in underscore_case and convert them to camelCase
 const btn = document.querySelector('button');
 const text = document.querySelector('textarea');
@@ -1259,3 +1285,4 @@ btn.addEventListener('click', function () {
     console.log(`${e.padEnd(21, ' ')}${'✅'.repeat(i + 1)}`);
   }
 });
+*/
