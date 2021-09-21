@@ -17,10 +17,10 @@ const createBooking = function (flightNum, numPassengers, price) {
 };
 
 createBooking("LH123"); // numPassengers and price will show up as undefined becuase we didn't specify them as an argument.
-*/
+
 
 // Old way of setting default parameters:
-/*const bookings = [];
+const bookings = [];
 
 const createBooking = function (flightNum, numPassengers, price) {
   // setting default values for numPassengers and price:
@@ -38,10 +38,10 @@ const createBooking = function (flightNum, numPassengers, price) {
 };
 
 createBooking("LH123"); // {flightNum: 'LH123', numPassengers: 1, price: 199}
-*/
+
 
 // ES6 way:
-/*
+
 const bookings = [];
 
 const createBooking = function (flightNum, numPassengers = 1, price = 199) {
@@ -57,10 +57,10 @@ const createBooking = function (flightNum, numPassengers = 1, price = 199) {
 
 createBooking("LH123"); // {flightNum: 'LH123', numPassengers: 1, price: 199}
 createBooking("LH123", 2, 800); // flightNum: 'LH123', numPassengers: 2, price: 800
-*/
+
 
 // Note: default values can contain any expressions, and we can even use the values of other parameters that were set before it. Eg:
-/*
+
 const bookings = [];
 
 const createBooking = function (
@@ -184,7 +184,7 @@ greet2("Hi there")("Shalveena");
 */
 
 // How we can set the 'this' keyword manually and why we would want to do this
-
+/*
 const lufthansa = {
   airline: "Lufthansa",
   iataCode: "LH",
@@ -200,17 +200,17 @@ const lufthansa = {
 };
 
 // test to show that when you save a reference to an object in another variable, you are only passing the reference value to that variable. Adding a name property to y variable in effect adds a name variable to the lufthansa object.
-/*
+
 let y = lufthansa;
 
 y.name = "Test";
 
 console.log(y);
 console.log(lufthansa);
-*/
+
 
 // test to show that when you save the value saved in a property into a variable, you are saving the actual value, not passing just a reference. So, you are making a copy of the value and saving it into the variable. In the below example, if I save lufthansa.airline into variable x, I am not just saving a reference to lufthansa.airline. This is proven by the fact that when I change y to "Air Pacific", the value of the airline property in lufthansa object doesn't change.
-/*
+
 let x = lufthansa.airline;
 x = "Air Pacific";
 console.log(lufthansa.airline);
@@ -221,7 +221,7 @@ console.log(lufthansa.airline);
 // y = "Air Pacific";
 // console.log(x);
 // console.log(lufthansa);
-*/
+
 
 lufthansa.book(239, "Shalveena Rohde");
 lufthansa.book(12, "Manfred Rohde");
@@ -244,9 +244,11 @@ const book = lufthansa.book;
 // This happens because here it is no longer the lufthansa object that is calling the function. We have saved the value of the book method (remember that a method is just a property that holds a function as the value) onto the book variable, and now we are calling that function. So, the this keyword returns undefined because we are calling book as a normal function - we are not calling the book property/method of the lufthansa object; nor is the lufthansa object calling the book property/method.
 
 // How can we tell JS what the this keyword should look like? We can use the call, apply and bind methods to do this.
+*/
 
 // Call method /////////////
 
+/*
 // This is simply a method that is available on functions (remember that functions are just another type of object, so they have methods).
 book.call(eurowings, 23, "Sarah Williams");
 console.log(eurowings);
@@ -272,12 +274,12 @@ console.log(eurowings);
 // Does the same as the call method, but instead of taking individual arguments, it takes an array as it's second argument:
 const flightData = [583, "Marie Condo"];
 book.apply(eurowings, flightData);
-console.log(eurowings);
+// console.log(eurowings);
 // The apply method is not commonly used anymore because we can now pass arrays to the call method by using the spread operator:
 book.call(eurowings, ...flightData);
 
 // testing why objects appear changed in console before it is actually changed.
-/*
+
 const newObj = {
   name: [],
 
@@ -291,4 +293,136 @@ console.log(newObj.name);
 
 newObj.addName("Max");
 console.log(newObj.name);
+
+
+
+// Bind method /////////////////////
+
+// Also allows us to manually set the this keyword for any function call. It doesn't immediately call the function, but returns a new function where the this keyword is bound to the thing we passed as an argument.
+
+const bookEW = book.bind(eurowings);
+// this returns a function where the this keyword will be bound to eurowings.
+bookEW(23, "Steven Williams");
+
+// we can now go ahead and make a function for each of the airlines, so that instead of having to use a call all the time, we can just do bind once and from there on we can always use the new functions:
+const bookLH = book.bind(lufthansa);
+
+// In the bind method, we can actually pass in more arguments too, which will be bound in the function. For example, we could use bind to create a funciton for a specific airline and a specific flight:
+const bookEW23 = book.bind(eurowings, 23);
+// 23 will be the flightnumber, which will be pre-set to 23.
+
+// Now, we can just book people onto flight 23 for Eurowings just be putting in the customer names:
+bookEW23("Shalveena Rohde");
+bookEW23("Martha Cooper");
+// Note: this is called partial application - specifying parts of the arguments beforehand (a part of the arugment of he original function is already applied/set).
+
+// Bind method is even more useful when using objects in combination with Event Listners:
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+
+// document.querySelector(".buy").addEventListener("click", lufthansa.buyPlane);
+// this.planes will be NaN because the this keyword is the button element that that the event listener is attached to. Why is that? Because in an event handler function, the this keyword always points to the element on which the handler function is attached to.
+// We therefore need to manually define the this keyword. We cannot use the call method here, because the call method calls the function, and we don't want to call it (the button being clicked will call it)
+document
+  .querySelector(".buy")
+  .addEventListener("click", lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+// means we can pre-set parameters
+
+// General function for adding tax:
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// Specific function for adding VAT in Portugal:
+// we can preset the tax rate so it will always be 23%.
+// const addVAT = addTax.bind(null, 0.23); // first argument is the this keyword. We just use null here (can use any other value)
+
+console.log(addVAT(200)); // 246
+// Note: order of arguments is important here because if we want to pre-set the rate, it needs to be the first parameter of the addTax function.
+
+// Could argue that the above could have easily been done with default parameters, but this is different here because it actually creates a brand new (and more specific) function based on the more general addTax function. Using bind gives us a new function.
+
+// Challenge: Re-write the above, but with the technique of one function returning another function.
+
+const addTax = (rate) => {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+const addVAT = addTax(0.23);
+console.log(addVAT(100));
 */
+
+// Challenge 1 ------------------------------------------
+
+const poll = {
+  question: "What is your favourite programming language?",
+  options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
+
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+
+  registerNewAnswer() {
+    // Get answer
+    const replyNumber = Number(
+      prompt(
+        `${this.question} \n${this.options.join("\n")} \n (Write option number)`
+      )
+    );
+
+    // Register answer
+
+    // My solution:
+    // if (replyNumber >= 0 && replyNumber <= 3) {
+    //   this.answers[replyNumber]++;
+    // } else {
+    //   window.alert("Please enter a number between 1 and 3");
+    // }
+
+    // Jonas's solution (short-circuiting):
+
+    typeof replyNumber === "number" &&
+      replyNumber < this.answers.length &&
+      this.answers[replyNumber]++;
+
+    // Display answer
+    this.displayResults();
+    this.displayResults("string");
+  },
+
+  displayResults(type = "array") {
+    if (type === "array") {
+      console.log(this.answers);
+    } else if (type === "string") {
+      console.log(`Poll results are ${this.answers.join(", ")}`);
+    }
+  },
+};
+
+const registerNewAnswerForPoll = poll.registerNewAnswer.bind(poll);
+const pollBtn = document.querySelector(".poll");
+
+pollBtn.addEventListener("click", registerNewAnswerForPoll);
+
+// Use the "displayResults" method to display the following arrays, using both the "array" and "string" option.
+
+const data1 = {
+  answers: [5, 2, 3],
+};
+
+const data2 = {
+  answers: [1, 5, 3, 9, 6, 1],
+};
+
+const displayResults = poll.displayResults;
+displayResults.call(data1, "array");
+displayResults.call(data1, "string");
+displayResults.call(data2, "array");
+displayResults.call(data2, "string");
