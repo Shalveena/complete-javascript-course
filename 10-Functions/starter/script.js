@@ -361,7 +361,7 @@ console.log(addVAT(100));
 */
 
 // Challenge 1 ------------------------------------------
-
+/*
 const poll = {
   question: "What is your favourite programming language?",
   options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
@@ -426,3 +426,94 @@ displayResults.call(data1, "array");
 displayResults.call(data1, "string");
 displayResults.call(data2, "array");
 displayResults.call(data2, "string");
+*/
+
+// Immediately Invoked Function Expressions (IIFE)/////////
+/*
+// A function that is only executed once and then disappears and is never called again. We need this for async await.
+
+// Option 1: Can create a function and only execute it once:
+const runOnce = function () {
+  console.log("This is supposed to run only once!");
+};
+
+runOnce();
+// But there is nothing stopping someone from running this function again.
+
+// Option 2 (better option): IIFE
+// We want to execute a function immediately without even having to save it somewhere.
+(function () {
+  console.log("This will never run again");
+})();
+
+// Can also do this in arrow function form:
+(() => console.log("This will never run again"))();
+
+// Why was this invented?
+// Functions create scopes, and a scope doesn't have access to variables in an inner scope. E.g. the global scope doesn't have access to any variables defined inside a function. Therefore, we say that all data defined inside a scope is private, and the data is encapsulated. IIFEs were invented for this.
+// Note: code blocks also create scope, for let and const variables. E.g:
+{
+  const isPrivate = 23;
+} // this is not accessible on the global scope.
+
+// IIFE are not used so much anymore, because if what we really want is to create a new scope to protect data privacy, all we need to do is create a new code block - no need to create a function, unless we want to use var for our variables.
+// But if what you really need is to execute a function only once, then an IIFE is ideal, even now with modern JS.
+*/
+
+// Closures --------------------------------------------------
+
+// Example 1:
+let f;
+
+const g = function () {
+  const a = 23;
+
+  // reassigning variable f to a function
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+g();
+// At this point, the execution environment of g() is no longer there.
+
+f(); // 46
+// This shows that the f function keeps a copy of the variable environment of the execution context in which it was made - that is, it remembers all the variables that existed within the execution context of g(), which included the a variable. That is why it can refer to a and multiple it by 2.
+// The above is true even though variable f was not actually defined inside the function g; it was defined/created outside but then re-defined inside the g function (re-assigned).
+
+const h = function () {
+  const b = 277;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+// Re-assigning f function
+g();
+f();
+console.dir(f); // Closure: 23
+
+// Re-assigning f function again
+h();
+f();
+console.dir(f); // Closure: 777
+
+// Above shows that a closure can change as the variable is re-assigned!
+
+// Example 2:
+// We don't need to return a function to see a closure in action.
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  // Timer
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+boardPassengers(180, 3);
+// Will create perGroup, setTimeout function will be called and it will register the callback function, which will be called after 3 seconds. And the console.log at the end will be called immediately (without waiting the 3 seconds). After the code inside boardPassengers is run, it's execution context will disappear/be removed from the call stack (even though the callback function is not executed until 3 seconds later - the boardPassengers function call puts it into motion and then finishes immediately, without waiting for the 3 seconds to finish.)
+// Despite the above, the callback function remembers what n, perGroup and wait variables are (even though it was executed completely separately to the boardPassengers function). It remembered these variables through closure (note that the closure also includes the arguments, e.g. n and wait, because those are just local variables in the function)
