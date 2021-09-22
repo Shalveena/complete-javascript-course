@@ -517,3 +517,14 @@ const boardPassengers = function (n, wait) {
 boardPassengers(180, 3);
 // Will create perGroup, setTimeout function will be called and it will register the callback function, which will be called after 3 seconds. And the console.log at the end will be called immediately (without waiting the 3 seconds). After the code inside boardPassengers is run, it's execution context will disappear/be removed from the call stack (even though the callback function is not executed until 3 seconds later - the boardPassengers function call puts it into motion and then finishes immediately, without waiting for the 3 seconds to finish.)
 // Despite the above, the callback function remembers what n, perGroup and wait variables are (even though it was executed completely separately to the boardPassengers function). It remembered these variables through closure (note that the closure also includes the arguments, e.g. n and wait, because those are just local variables in the function)
+
+// Coding Challenge 2:
+
+(function () {
+  const header = document.querySelector("h1");
+  header.style.color = "red";
+
+  document.querySelector("body").addEventListener("click", () => {
+    header.style.color = header.style.color === "blue" ? "red" : "blue";
+  });
+})();
