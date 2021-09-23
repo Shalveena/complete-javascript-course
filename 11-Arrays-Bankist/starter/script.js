@@ -65,13 +65,13 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 /*
@@ -140,4 +140,83 @@ console.log([...arr, ...arr2]); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
 console.log(letters.join('-')); // a-b-c-d-e-f-g-h-i-j
 console.log(letters);
+*/
+
+// FOR EACH ///////////////////////////////////////////////////////
+/*
+// loop over this array and print a message for each moment in this bank account, saying whether the user deposited or withdrew some money:
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for-of loop:
+// for (const movement of movements) {
+//   if (movement > 0) {
+//     console.log(`You deposited ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${Math.abs(movement)}`);
+//   }
+// }
+
+// for-each method to achieve the same thing as above, but more easily:
+// the forEach method will loop through the array and in each iteration it will execute the callback function. It will pass in the current element of the array as an argument to the callback function
+// console.log('---- FOR EACH ----');
+// movements.forEach(movement => {
+//   if (movement > 0) {
+//     console.log(`You deposited ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${Math.abs(movement)}`);
+//   }
+// });
+
+// What if we needed access to a counter element?
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+// The for each method passes not only the current element each time it iterates through the array, but also the index and array, so we can put all three as parameters of the callback function. The first parameter of the callback function will always be the current element, second will be the current index and third will be the array that we are looping through.
+console.log('---- FOR EACH ----');
+movements.forEach((movement, i, array) => {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+});
+
+// Fundament difference: You cannot break out of a for each loop (using break and continue). If you really need to break out of a loop, you need to use the for of loop, otherwise, you can choose which one you like better :)
+*/
+
+// USING FOR EACH METHOD WITH MAPS ---------------------
+/*
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach((value, key, map) => {
+  console.log(`${key}: ${value}`);
+});
+
+// USING FOR EACH METHOD WITH SETS ---------------------
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique); // Set(3) {'USD', 'GBP', 'EUR'}
+
+currenciesUnique.forEach((value, key, map) => {
+  console.log(`${key}: ${value}`);
+});
+// USD: USD
+// GBP: GBP
+// EUR: EUR
+
+// Since Sets don't have idicies or keys, it doesn't make sense to have the "key" parameter, so we can just do the following instead:
+currenciesUnique.forEach((value, _, map) => {
+  console.log(`${value}: ${value}`);
+});
+// USD: USD
+// GBP: GBP
+// EUR: EUR
 */
