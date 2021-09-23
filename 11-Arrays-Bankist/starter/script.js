@@ -74,3 +74,70 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+/*
+// Remember that methods are just functions that we can call on objects - they are functions attached to objects. And remember that arrays are objects. So, these array methods are simply functions that are attached to all arrays we create.
+
+let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// Slice method: -----------------------------------------------------
+
+// We can extract part of the array without changing the original array.
+console.log(arr.slice(2)); // starts extracting at position 2. Returns a new array: ["c", "d", "e"]
+
+console.log(arr.slice(2, 4)); // will stop just before position 4. Returns new array: ['c', 'd']
+
+// We can define a negative begin parameter, which means it will start to copy from the end of the array.
+console.log(arr.slice(-1)); // ["e"]
+// We can use the above to easily get the element at the end of the array.
+console.log(arr.slice(2, -1)); // Will start extracting at position 2 and stop just before the last element: ["c", "d"]
+
+// Finally, we can use the slice method to create a shallow copy of an array:
+console.log(arr.slice()); // ['a', 'b', 'c', 'd', 'e']
+// We could also do this using the spread operator:
+console.log([...arr]); // // ['a', 'b', 'c', 'd', 'e']
+
+// Splice method: -----------------------------------------------------
+
+// Same as slice method, but it mutates the original array by removing the specified elements from it. It returns the part of the array that has been removed.
+
+console.log(arr.splice(2)); // ['c', 'd', 'e']
+console.log(arr); // ['a', 'b']
+
+// common use case is removing the last element of the array:
+arr.splice(-1);
+console.log(arr); // ["a"]
+
+// You can choose to take out only a middle part of the array. The splice will begin at the first argument and then will delete the number of elements as per the second argument.
+arr = ['a', 'b', 'c', 'd', 'e'];
+arr.splice(1, 3); // will remove "b", "c", "d"
+console.log(arr); // ["a", "e"]
+
+// Reverse -----------------------------------------------------------
+
+// Returns array where the elements are in reverse order.
+// Mutates the original array
+
+arr = ['a', 'b', 'c', 'd', 'e'];
+const arr2 = ['j', 'i', 'h', 'g', 'f'];
+
+console.log(arr2.reverse()); // ['f', 'g', 'h', 'i', 'j']
+console.log(arr2); // Original array is reversed. ['f', 'g', 'h', 'i', 'j']
+
+// Concat ------------------------------------------------------------
+// Concatenates two arrays
+// Returns the new array
+// Does not mutate the original arrays
+
+const letters = arr.concat(arr2);
+console.log(letters); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+console.log(arr); // ['a', 'b', 'c', 'd', 'e']
+//Can achieve the same thing by doing this:
+console.log([...arr, ...arr2]); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+
+// Join -------------------------------------------------------------
+// Joins the elements of an array into a string, with the separator provided in the argument. Returns the string.
+// Does not mutate the original array
+
+console.log(letters.join('-')); // a-b-c-d-e-f-g-h-i-j
+console.log(letters);
+*/
