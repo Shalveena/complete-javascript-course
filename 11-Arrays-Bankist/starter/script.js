@@ -63,11 +63,9 @@ const inputClosePin = document.querySelector(".form__input--pin");
 
 /////////////////////////////////////////////////
 
-// Showing transactions
+// Functions ------------------------------------------------------
 
-// 1. Show the movements for the particular account: account.movements.
-// 2. For each moment, create HTML
-// 3. Add HTML that you created to the DOM element.
+// Showing transactions
 
 const createHTML = (movements) => {
   const htmlArr = [];
@@ -102,12 +100,55 @@ const displayMovements = (movements) => {
   });
 };
 
+// Create usernames from accounts array
+
+// Username is a word, which is made up of:
+// the first letter of each word
+// in the owner property
+// of the account object
+// in the accounts array.
+
+// 1. Loop through the accounts array, to get each account object
+// 2. Add a new property (username) to the object. The value will be a string with the first letter of each name from the owner property.
+// a. Get the owner property of each account object
+// b. Put the value of owner property into an array
+// c. Loop through the array and get the first letter of each name(element) in the array
+// d. Put the first letters into an array and then join them.
+// e. Add the new string into a new property (username) in the account object.
+
+const addUsernames = function (arrOfAccounts) {
+  arrOfAccounts.forEach((account) => {
+    account.username = account.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+};
+
+// const addUsernamesMap = function (arrOfAccounts) {
+//   const newAccounts = arrOfAccounts.map((account) => {
+//     const newUserName = account.owner
+//       .toLowerCase()
+//       .split(" ")
+//       .map((name) => name[0])
+//       .join("");
+
+//     return { ...account, username: newUserName };
+//   });
+
+//   return newAccounts;
+// };
+
+// Function calls --------------------------------------
+
 displayMovements(account1.movements);
+addUsernames(accounts);
 
 /////////////////////////////////////////////////
 
 // Coding Challenge 1:
-
+/*
 const checkDogs = (dogsJulia, dogsKate) => {
   const dogAges = dogsJulia.slice(1, -2).concat(dogsKate);
 
@@ -124,6 +165,7 @@ console.log("---- Data1 ----");
 checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 console.log("---- Data2 ----");
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+*/
 
 // LECTURES
 
@@ -281,4 +323,35 @@ currenciesUnique.forEach((value, _, map) => {
 // USD: USD
 // GBP: GBP
 // EUR: EUR
+*/
+
+// MAP METHOD /////////////////////////////////////////////////
+/*
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// Change movements from euro to USD
+const euroToUSD = 1.1;
+
+const movementsUSD = movements.map((movement) => movement * euroToUSD);
+
+// Can also use for of loop instead of map method, but the map method is more in line with modern JS, which uses functional programming
+const movementsUSDForOf = [];
+
+for (const movement of movements) {
+  movementsUSDForOf.push(movement * euroToUSD);
+}
+
+console.log(movementsUSD);
+console.log(movementsUSDForOf);
+// Both are: [220.00000000000003, 495.00000000000006, -440.00000000000006, 3300.0000000000005, -715.0000000000001, -143, 77, 1430.0000000000002]
+
+const messages = movements
+  .map(function (movement, i) {
+    const transaction = movement > 0 ? "deposited" : "withdrew";
+
+    return `Movement ${i + 1}: You ${transaction} ${Math.abs(movement)}`;
+  })
+  .join("\n");
+
+console.log(messages);
 */
