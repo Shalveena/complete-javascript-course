@@ -355,3 +355,35 @@ const messages = movements
 
 console.log(messages);
 */
+
+// FILTER METHOD ///////////////////////////////////////////////
+// Is used to filter for elements that satisfy certain conditions.
+// We specify the conditions using a callback function.
+// Like map and forEach, the filter method gets access to the element, index and whole array as parameters of the callback function.
+// It makes/returns a new array that is made up of all the elements of the original array for which the callback function returns the boolean 'true'.
+
+// Create an array of the deposits:
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const deposits = movements.filter((movement) => {
+  return movement > 0;
+});
+
+console.log(deposits);
+
+// Comparison with for-of loop:
+const depositsForOfLoop = [];
+
+for (const movement of movements) {
+  if (movement > 0) {
+    depositsForOfLoop.push(movement);
+  }
+}
+
+console.log(depositsForOfLoop);
+
+// Create an array of the withdrawals:
+
+const withdrawals = movements.filter((movement) => movement < 0);
+
+console.log(withdrawals);
