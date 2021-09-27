@@ -145,7 +145,8 @@ const addUsernames = function (arrOfAccounts) {
 displayMovements(account1.movements);
 addUsernames(accounts);
 
-/////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////
 
 // Coding Challenge 1:
 /*
@@ -167,7 +168,33 @@ console.log("---- Data2 ----");
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 */
 
-// LECTURES
+// Coding Challenge 2:
+
+const calcAverageHumanAge = function (dogAgesArr) {
+  // Calculate dog age in human years
+  // Exclude all dogs < 18 yl
+  // Calculate average age of all adult dogs
+
+  const humanAgesArr = dogAgesArr.map((dogAge) => {
+    return dogAge <= 2 ? dogAge * 2 : 16 + dogAge * 4;
+  });
+
+  const adultDogs = humanAgesArr.filter((age) => {
+    return age >= 18;
+  });
+
+  const avgAge =
+    adultDogs.reduce((acc, age) => {
+      return acc + age;
+    }, 0) / adultDogs.length;
+
+  return avgAge;
+};
+
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+
+// LECTURES///////////////////////////////
 
 // const currencies = new Map([
 //   ['USD', 'United States dollar'],
