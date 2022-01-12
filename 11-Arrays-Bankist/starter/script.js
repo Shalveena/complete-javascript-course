@@ -442,6 +442,22 @@ console.log(maximum2); //3000
 
 // console.log(totalDepositsUSD);
 
+// FIND METHOD
+const firstWithdrawal = account1.movements.find((mov) => mov < 0);
+console.log(account1.movements);
+console.log(firstWithdrawal);
+
+// The find method is often used when we want an exact element. For example, we want the Jessica Davis object from an array of objects:
+console.log(accounts);
+const account = accounts.find((acc) => acc.owner === "Jessica Davis");
+console.log(account);
+
+// Doing the same thing using a for of loop:
+for (const account of accounts) {
+  if (account.owner === "Jessica Davis") {
+    console.log(account);
+  }
+}
 ////////////////////CODING CHALLENGES ////////////////////////////
 
 // Coding Challenge 1:
@@ -508,6 +524,7 @@ console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
 console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
 */
 
+/*
 // Coding Challenge 3:
 const calcAverageHumanAge = (dogAgesArr) => {
   const newAges = dogAgesArr
@@ -524,3 +541,4 @@ const calcAverageHumanAge = (dogAgesArr) => {
 
 calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+*/
