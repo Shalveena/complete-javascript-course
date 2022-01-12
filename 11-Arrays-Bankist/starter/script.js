@@ -79,7 +79,7 @@ const createHTML = (movements) => {
       i + 1
     } ${typeOfTransaction}</div>
       <div class="movements__date">3 days ago</div>
-      <div class="movements__value">${mov}</div>
+      <div class="movements__value">${mov}€</div>
     </div>
     `;
 
@@ -140,76 +140,42 @@ const addUsernames = function (arrOfAccounts) {
 //   return newAccounts;
 // };
 
+// Calculate & display balance
+const calcAndDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance}€`;
+};
+
+// Calculate total money in,  money out and interest
+const calcAndDisplayTotals = (movements) => {
+  const totalDeposits = movements
+    .filter((mov) => mov > 0)
+    .reduce((previous, current) => previous + current, 0);
+  labelSumIn.textContent = `${totalDeposits}€`;
+
+  const totalWithdrawals = movements
+    .filter((mov) => mov < 0)
+    .reduce((prev, curr) => prev + curr, 0);
+  labelSumOut.textContent = `${Math.abs(totalWithdrawals)}€`;
+
+  // bank pays 1.2% interest each time you make a deposit, but only if the interest amount would be more than 1Euro
+  const interest = movements
+    .filter((movement) => movement > 0)
+    .map((deposit) => (deposit * 1.2) / 100)
+    .filter((deposit) => deposit > 1)
+    .reduce((acc, interest) => acc + interest);
+
+  labelSumInterest.textContent = `${interest}€`;
+};
 // Function calls --------------------------------------
 
 displayMovements(account1.movements);
+calcAndDisplayBalance(account1.movements);
 addUsernames(accounts);
+calcAndDisplayTotals(account1.movements);
 
 /////////////////////////////////////////////////////////////////////
 //////////////////////////////////////
-
-// Coding Challenge 1:
-/*
-const checkDogs = (dogsJulia, dogsKate) => {
-  const dogAges = dogsJulia.slice(1, -2).concat(dogsKate);
-
-  dogAges.forEach((age, i) => {
-    if (age > 2) {
-      console.log(`Dog number ${i + 1} is an adult, and is ${age} years old`);
-    } else {
-      console.log(`Dog number ${i + 1} is still a puppy 🐶`);
-    }
-  });
-};
-
-console.log("---- Data1 ----");
-checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
-console.log("---- Data2 ----");
-checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
-*/
-
-// Second try (on later date):
-/*
-const dogsJulia = [9, 16, 6, 8, 3]; // [3, 5, 2, 12, 7];
-const dogsKate = [10, 5, 6, 1, 4]; // [4, 1, 15, 8, 3];
-
-const checkDogs = (dogslist1, dogslist2) => {
-  const copyDogsList1 = dogslist1.slice(1, -2);
-  copyDogsList1.concat(dogslist2).forEach((dog, i) => {
-    dog >= 3
-      ? console.log(`Dog number ${i + 1} is an adult, and is ${dog} years old`)
-      : console.log(`Dog number ${i + 1} is still a puppy`);
-  });
-};
-
-console.log(checkDogs(dogsJulia, dogsKate));
-*/
-
-// Coding Challenge 2:
-
-const calcAverageHumanAge = function (dogAgesArr) {
-  // Calculate dog age in human years
-  // Exclude all dogs < 18 yl
-  // Calculate average age of all adult dogs
-
-  const humanAgesArr = dogAgesArr.map((dogAge) => {
-    return dogAge <= 2 ? dogAge * 2 : 16 + dogAge * 4;
-  });
-
-  const adultDogs = humanAgesArr.filter((age) => {
-    return age >= 18;
-  });
-
-  const avgAge =
-    adultDogs.reduce((acc, age) => {
-      return acc + age;
-    }, 0) / adultDogs.length;
-
-  return avgAge;
-};
-
-console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
-console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
 
 // LECTURES///////////////////////////////
 
@@ -401,6 +367,7 @@ console.log(messages);
 */
 
 // FILTER METHOD ///////////////////////////////////////////////
+/*
 // Is used to filter for elements that satisfy certain conditions.
 // We specify the conditions using a callback function.
 // Like map and forEach, the filter method gets access to the element, index and whole array as parameters of the callback function.
@@ -431,3 +398,129 @@ console.log(depositsForOfLoop);
 const withdrawals = movements.filter((movement) => movement < 0);
 
 console.log(withdrawals);
+*/
+
+// REDUCE METHOD
+/*
+// first parameter is a callback function.
+// the first parameter of the callback function is the accumulator.
+// Accumulator: like a snowball, that keeps accumulating the value we want to return.
+// the second parameter is the initial value of the accumulator.
+
+const movements = account1.movements;
+console.log(movements);
+
+const balance = movements.reduce((acc, cur, i, arr) => {
+  console.log(`Iteration ${i}: ${acc}`);
+  return acc + cur;
+}, 0);
+
+console.log(balance);
+
+// Finding the maxiumum value in the movements array
+const maximum = movements.reduce((previousValue, currentValue) => {
+  return Math.max(previousValue, currentValue);
+});
+
+console.log(maximum);
+
+// Finding the maximum value in the movements array:
+const maximum2 = movements.reduce((previousValue, currentValue) => {
+  if (previousValue > currentValue) return previousValue;
+  else return currentValue;
+});
+console.log(maximum2); //3000
+*/
+
+// Convert euro to usd
+// const euroToUsd = 1.1;
+
+// const totalDepositsUSD = account1.movements
+//   .filter((mov) => mov > 0)
+//   .map((mov) => mov * euroToUsd)
+//   .reduce((acc, mov) => acc + mov, 0);
+
+// console.log(totalDepositsUSD);
+
+////////////////////CODING CHALLENGES ////////////////////////////
+
+// Coding Challenge 1:
+/*
+const checkDogs = (dogsJulia, dogsKate) => {
+  const dogAges = dogsJulia.slice(1, -2).concat(dogsKate);
+
+  dogAges.forEach((age, i) => {
+    if (age > 2) {
+      console.log(`Dog number ${i + 1} is an adult, and is ${age} years old`);
+    } else {
+      console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+    }
+  });
+};
+
+console.log("---- Data1 ----");
+checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+console.log("---- Data2 ----");
+checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+*/
+
+// Second try (on later date):
+/*
+const dogsJulia = [9, 16, 6, 8, 3]; // [3, 5, 2, 12, 7];
+const dogsKate = [10, 5, 6, 1, 4]; // [4, 1, 15, 8, 3];
+
+const checkDogs = (dogslist1, dogslist2) => {
+  const copyDogsList1 = dogslist1.slice(1, -2);
+  copyDogsList1.concat(dogslist2).forEach((dog, i) => {
+    dog >= 3
+      ? console.log(`Dog number ${i + 1} is an adult, and is ${dog} years old`)
+      : console.log(`Dog number ${i + 1} is still a puppy`);
+  });
+};
+
+console.log(checkDogs(dogsJulia, dogsKate));
+*/
+/*
+// Coding Challenge 2:
+
+const calcAverageHumanAge = function (dogAgesArr) {
+  // Calculate dog age in human years
+  // Exclude all dogs < 18 yl
+  // Calculate average age of all adult dogs
+
+  const humanAgesArr = dogAgesArr.map((dogAge) => {
+    return dogAge <= 2 ? dogAge * 2 : 16 + dogAge * 4;
+  });
+
+  const adultDogs = humanAgesArr.filter((age) => {
+    return age >= 18;
+  });
+
+  const avgAge =
+    adultDogs.reduce((acc, age) => {
+      return acc + age;
+    }, 0) / adultDogs.length;
+
+  return avgAge;
+};
+
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+*/
+
+// Coding Challenge 3:
+const calcAverageHumanAge = (dogAgesArr) => {
+  const newAges = dogAgesArr
+    .map((dogAge) => {
+      return dogAge <= 2 ? dogAge * 2 : 16 + dogAge * 4;
+    })
+    .filter((humanAge) => humanAge >= 18)
+    .reduce((acc, age, _, arr) => {
+      return acc + age / arr.length;
+    }, 0);
+
+  console.log(newAges);
+};
+
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
