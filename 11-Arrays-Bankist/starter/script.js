@@ -147,33 +147,60 @@ const calcAndDisplayBalance = function (movements) {
 };
 
 // Calculate total money in,  money out and interest
-const calcAndDisplayTotals = (movements) => {
-  const totalDeposits = movements
+const calcAndDisplayTotals = (account) => {
+  const totalDeposits = account.movements
     .filter((mov) => mov > 0)
     .reduce((previous, current) => previous + current, 0);
   labelSumIn.textContent = `${totalDeposits}€`;
 
-  const totalWithdrawals = movements
+  const totalWithdrawals = account.movements
     .filter((mov) => mov < 0)
     .reduce((prev, curr) => prev + curr, 0);
   labelSumOut.textContent = `${Math.abs(totalWithdrawals)}€`;
 
   // bank pays 1.2% interest each time you make a deposit, but only if the interest amount would be more than 1Euro
-  const interest = movements
+  const interest = account.movements
     .filter((movement) => movement > 0)
-    .map((deposit) => (deposit * 1.2) / 100)
+    .map((deposit) => (deposit * account.interestRate) / 100)
     .filter((deposit) => deposit > 1)
     .reduce((acc, interest) => acc + interest);
 
   labelSumInterest.textContent = `${interest}€`;
 };
+
 // Function calls --------------------------------------
 
-displayMovements(account1.movements);
-calcAndDisplayBalance(account1.movements);
 addUsernames(accounts);
-calcAndDisplayTotals(account1.movements);
 
+// Event handler for logging in
+let currentAccount;
+btnLogin.addEventListener("click", (e) => {
+  // prevent form from submitting
+  e.preventDefault();
+  // check the username and password match
+  currentAccount = accounts.find((account) => {
+    return account.username === inputLoginUsername.value;
+  });
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // display UI and welcome message
+    labelWelcome.textContent = `Welcome back ${
+      currentAccount.owner.split(" ")[0]
+    }`;
+
+    containerApp.style.opacity = 100;
+
+    // clear input fields
+    inputLoginUsername.value = inputLoginPin.value = ""; // works because assignment operator works from right to left.
+    inputLoginPin.blur();
+    // display movements
+    displayMovements(currentAccount.movements);
+    // display balance
+    calcAndDisplayBalance(currentAccount.movements);
+    // display summary
+    calcAndDisplayTotals(currentAccount);
+  }
+});
 /////////////////////////////////////////////////////////////////////
 //////////////////////////////////////
 
@@ -443,6 +470,7 @@ console.log(maximum2); //3000
 // console.log(totalDepositsUSD);
 
 // FIND METHOD
+/*
 const firstWithdrawal = account1.movements.find((mov) => mov < 0);
 console.log(account1.movements);
 console.log(firstWithdrawal);
@@ -458,6 +486,8 @@ for (const account of accounts) {
     console.log(account);
   }
 }
+*/
+
 ////////////////////CODING CHALLENGES ////////////////////////////
 
 // Coding Challenge 1:
