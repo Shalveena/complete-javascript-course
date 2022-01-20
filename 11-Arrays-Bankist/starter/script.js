@@ -89,14 +89,13 @@ const createHTML = (movements) => {
   return htmlArr;
 };
 
-const displayMovements = (movements) => {
+const displayMovements = (movements, sort = false) => {
   containerMovements.innerHTML = "";
 
-  createHTML(movements).forEach((movement, i) => {
-    containerMovements.insertAdjacentHTML(
-      "afterbegin",
-      createHTML(movements)[i]
-    );
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  createHTML(movs).forEach((movement, i) => {
+    containerMovements.insertAdjacentHTML("afterbegin", createHTML(movs)[i]);
   });
 };
 
@@ -141,9 +140,9 @@ const addUsernames = function (arrOfAccounts) {
 // };
 
 // Calculate & display balance
-const calcAndDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcAndDisplayBalance = function (account) {
+  account.balance = account.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${account.balance}€`;
 };
 
 // Calculate total money in,  money out and interest
@@ -168,9 +167,22 @@ const calcAndDisplayTotals = (account) => {
   labelSumInterest.textContent = `${interest}€`;
 };
 
+const updateUI = (account) => {
+  // display movements
+  displayMovements(account.movements);
+  // display balance
+  calcAndDisplayBalance(account);
+  // display summary
+  calcAndDisplayTotals(account);
+};
+
+///////////////////////////////////////////////////////////////
+
 // Function calls --------------------------------------
 
 addUsernames(accounts);
+
+// EVENT HANDLERS ////////////////////////////////////////////
 
 // Event handler for logging in
 let currentAccount;
@@ -193,14 +205,102 @@ btnLogin.addEventListener("click", (e) => {
     // clear input fields
     inputLoginUsername.value = inputLoginPin.value = ""; // works because assignment operator works from right to left.
     inputLoginPin.blur();
-    // display movements
-    displayMovements(currentAccount.movements);
-    // display balance
-    calcAndDisplayBalance(currentAccount.movements);
-    // display summary
-    calcAndDisplayTotals(currentAccount);
+
+    updateUI(currentAccount);
   }
 });
+
+// Event handler for transferring money
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+  const transferAmount = Number(inputTransferAmount.value);
+
+  // checking if user's input into "Transfer to" matches existing username. If so, assign to recipientAccount variable. If not, will return undefined.
+  const recipientAccount = accounts.find(function (account) {
+    return inputTransferTo.value === account.username;
+  });
+
+  console.log(recipientAccount, transferAmount);
+
+  // before doing the transfer, need to check:
+
+  // // receiver account exists
+  // // receiver account is not the same as the current account
+  // // sender has balance of at least the amount being transferred
+  // // amount being sent is not negative
+  if (
+    recipientAccount &&
+    recipientAccount?.username !== currentAccount.username &&
+    transferAmount > 0 &&
+    currentAccount.balance >= transferAmount
+  ) {
+    // when clicked, the amount transferred should be -minus in the sending account and +plus in the receiving account.
+    // the balance in each account should also be updated.
+
+    currentAccount.movements.push(-transferAmount);
+    recipientAccount.movements.push(transferAmount);
+    updateUI(currentAccount);
+
+    console.log("tranfer complete");
+  }
+
+  inputTransferAmount.value = inputTransferTo.value = "";
+});
+
+// Event handler for requesting loan
+// loan will only be approved if the account has a deposit that was at least 10% of the loan being requested.
+
+btnLoan.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const loanAmount = Number(inputLoanAmount.value);
+  if (
+    loanAmount > 0 &&
+    currentAccount.movements.some((movement) => movement >= loanAmount * 0.1)
+  ) {
+    // Add movement
+    currentAccount.movements.push(loanAmount);
+
+    // update UI
+    updateUI(currentAccount);
+
+    // remove focus from input field
+    inputLoanAmount.value = "";
+  }
+});
+
+// Event handler for closing account
+btnClose.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    // find the account that is being deleted from the accounts array
+    const index = accounts.findIndex((acc) => {
+      return acc.username === inputCloseUsername.value;
+    });
+
+    // delete the account
+    accounts.splice(index, 1);
+
+    // close UI
+    containerApp.style.opacity = 0;
+  }
+
+  // remove focus from input fields
+  inputCloseUsername.value = inputClosePin.value = "";
+});
+
+// Event handler for sorting transactions in ascending order:
+let sorted = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  sorted = !sorted;
+  displayMovements(currentAccount.movements, sorted);
+});
+
 /////////////////////////////////////////////////////////////////////
 //////////////////////////////////////
 
@@ -427,7 +527,7 @@ const withdrawals = movements.filter((movement) => movement < 0);
 console.log(withdrawals);
 */
 
-// REDUCE METHOD
+// REDUCE METHOD ////////////////////////////////////////////////////
 /*
 // first parameter is a callback function.
 // the first parameter of the callback function is the accumulator.
@@ -469,7 +569,7 @@ console.log(maximum2); //3000
 
 // console.log(totalDepositsUSD);
 
-// FIND METHOD
+// FIND METHOD ////////////////////////////////////////////////
 /*
 const firstWithdrawal = account1.movements.find((mov) => mov < 0);
 console.log(account1.movements);
@@ -486,6 +586,192 @@ for (const account of accounts) {
     console.log(account);
   }
 }
+*/
+
+// FindIndex method ////////////////////////////////////////////////
+// Works almost the same was as the find method, but it returns the index of the found element and not the element itself.
+
+// closing an account (deleting it from the accounts array)
+// see app at top -> event listener for closing account.
+
+// SOME METHOD //////////////////////////////////////////////////////
+/*
+console.log(account1.movements); // [200, 450, -400, 3000, -650, -130, 70, 1300]
+console.log(account1.movements.includes(-130)); // true
+
+// checking whether the account had any deposits made into it
+const anyDeposits = account1.movements.some((mov) => {
+  return mov > 0;
+});
+console.log(anyDeposits); // true
+*/
+
+// EVERY METHOD /////////////////////////////////////////////////////
+/*
+// Similar to the some method, but it returns true only if every element in the array passes the condition.
+console.log(account1.movements);
+console.log(account1.movements.every((mov) => mov > 0));
+console.log(account4.movements);
+console.log(account4.movements.every((mov) => mov > 1));
+*/
+
+// FLAT AND FLATMAP METHOD
+/*
+// How can we flatten this array?
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+
+// We can use the spread operator, but it is a bit cumbersome:
+const arrFlattenedOld = [...arr[0], ...arr[1], arr[2], arr[3]];
+console.log(arrFlattenedOld);
+
+// Thankfully, we now have the .flat method, which is much easier:
+const arrFlattenedNew = arr.flat();
+console.log(arrFlattenedNew);
+
+// doesn't mutate the original array
+console.log(arr);
+
+// But what if you have an array that is even deeper nested?
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat()); // [[1, 2], 3, 4, [5, 6], 7, 8];
+// We can do so by going two levels deep:
+console.log(arrDeep.flat(2)); // [1, 2, 3, 4, 5, 6, 7, 8]
+
+// Example: Calculate the total balance of all the bank accounts put together
+
+// FLAT
+console.log(accounts);
+
+// 1. Get the movements from each account and put them together in an array.
+const accountMovements = accounts.map((account) => account.movements);
+console.log(accountMovements);
+
+// 2. The array is nested, so we want to flatten it
+const movements = accountMovements.flat();
+console.log(movements);
+
+// 3. Add up all the movements to get a single balance using reduce method
+const overallTotal = movements.reduce(
+  (previousValue, currentValue) => previousValue + currentValue,
+  0
+);
+console.log(overallTotal);
+
+// Chaining (with flat method)
+
+const overallBalance = accounts
+  .map((account) => account.movements)
+  .flat()
+  .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+
+console.log(overallBalance);
+
+// FLATMAP
+// Is essentially the map method but it also flattens the resulting array. Note: it can only go one level deep; so if you need to go deeper, you'll still need to use the flat method.
+
+const overallBalance2 = accounts
+  .flatMap((account) => account.movements)
+  .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+
+console.log(overallBalance2);
+*/
+
+// SORTING ARRAYS ///////////////////////////////////////////////////////
+/*
+// Sorting strings:
+const names = ["Shalveena", "Sam", "Frodo", "Hans"];
+console.log(names.sort()); // ['Frodo', 'Hans', 'Sam', 'Shalveena']
+// Note: sort method mutates the original array:
+console.log(names); // ['Frodo', 'Hans', 'Sam', 'Shalveena']
+
+// Sorting numbers:
+// Need to provide a call-back function as an argument to the sort method
+// If the call-back function returns < 0, A will be sorted before B (keep order as is);
+// If the call-back function returns > 0, B will be before A (switch order)
+
+// Ascending order:
+account1.movements.sort((a, b) => {
+  if (a < b) return -1;
+  if (a > b) return 1;
+});
+// simplify to:
+account1.movements.sort((a, b) => a - b);
+
+console.log(account1.movements); // [-650, -400, -130, 70, 200, 450, 1300, 3000]
+
+// Descending order:
+account1.movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (a < b) return 1;
+});
+//simplify to:
+account1.movements.sort((a, b) => b - a);
+
+console.log(account1.movements); // [3000, 1300, 450, 200, 70, -130, -400, -650]
+*/
+
+// CREATING AND FILLING ARRAYS /////////////////////////////////////
+/*
+// FILL METHOD
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7)); // [1, 2, 3, 4, 5, 6, 7]
+
+// if you use the new Array constructor and only put in one value as an argument, it will not create an array with only one element with that value. Instead, it will create an empty array with that many empty elements. For example:
+const x = new Array(7);
+console.log(x); // [empty x 7]
+// note: you cannot use any array methods (e.g. map method) on empty arrays made with the array constructor (above).
+
+// Exception: the only method you CAN use is the fill method.
+
+// fill method
+// Works like the slice method. The first argument is the value you want to fill. The second argument is the starting position. The third argument is the ending position
+// console.log(x.fill(1)); // [1,1,1,1,1,1,1,]
+
+// note: fill method mutates the original array
+
+x.fill(1, 3, 5);
+console.log(x); // [empty, empty, empty, 1, 1, empty, empty]
+// note: the fill mehtod will stop just before the 5th element.
+
+// can also use the fill method on an existing (and not empty) array:
+arr.fill(23, 2, 6);
+console.log(arr); // [1, 2, 23, 23, 23, 23, 7]
+
+// Array.from function
+// The 'from' method is called on the Array constructor function. We can use it to fill an array programatically. Note: the first argument that the from method receives is the array-like or iterable object that you want to convert to an array; if there is no such object (you're making a brand new array from nothing), then you can just enter the length of the new array as { length: 9 }. The second argument is a callback function that works like the callback function in the map method (it is a map function that gets called one very element of the array).
+
+const y = Array.from({ length: 7 }, () => 1); // for each element, it will return 1 and then make an array of all the returned values (like the map method).
+console.log(y); // [1, 1, 1, 1, 1, 1, 1]
+
+const z = Array.from({ length: 7 }, (curr, i) => i + 1);
+console.log(z); // [1, 2, 3, 4, 5, 6, 7]
+
+// Create an array of 100 random dice rolls:
+const randomDiceRoll = Array.from({ length: 100 }, () =>
+  Math.ceil(Math.random() * 6)
+);
+console.log(randomDiceRoll);
+
+// Checking how many 6s are in the array
+const sixes = randomDiceRoll.filter((diceRoll) => diceRoll === 6).length;
+console.log(sixes); // 18
+
+// Real use-case
+// Imagine if the UI displayed all the transactions and amount for each transaction, but the amounts were not captured in an array in the source code anywhere. If we want to calculate the total balance of the account, we first need to get all the different transactions into an array and then calculate the total from there. We can use the Array.from method to create an array from a node-list (which is an array-like structure that results from calling the query selector all method).
+
+labelBalance.addEventListener("click", function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll(".movements__value"),
+    (el) => Number(el.textContent.replace("€", ""))
+  );
+
+  console.log(movementsUI); // [1300, 70, -130, -650, 3000, -400, 450, 200]
+
+  // Note: we can also use the spread operator instead of the Array.from method to change the node list to an array, but then we will need to apply the map method to it as a separate step after that to get the actual transaction value from the element and to remove the Euro sign.
+  const movementsUI2 = [...document.querySelectorAll(".movements__value")];
+  console.log(movementsUI2);
+});
 */
 
 ////////////////////CODING CHALLENGES ////////////////////////////
